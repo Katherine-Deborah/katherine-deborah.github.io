@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<<<<<<< HEAD
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katherine's Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Initialising portfolio</p>
+        </div>
+    </div>
+
+    <!-- Main Desktop -->
+    <div id="desktop" class="desktop hidden">
+        <!-- Menu Bar -->
+        <div class="menu-bar">
+            <div class="menu-bar-left">
+                <span class="apple-logo">Katherine's portfolio</span>
+                <div class="menu-items">
+                    <span class="menu-item">File</span>
+                    <span class="menu-item">Edit</span>
+                    <span class="menu-item">View</span>
+                    <span class="menu-item">Go</span>
+                    <span class="menu-item">Window</span>
+                    <span class="menu-item" onclick="showHelp()">Help</span>
+                </div>
+            </div>
+            <div class="menu-bar-right">
+                <span class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌓</span>
+                <span class="menu-time" id="current-time"></span>
+            </div>
+        </div>
+
+        <!-- Desktop Background -->
+        <div class="desktop-background"></div>
+
+        <!-- Windows Container -->
+        <div class="windows-container">
+            <!-- Terminal Window (About Me) -->
+            <div id="terminal-window" class="window terminal-window" style="display: block;">
+                <div class="window-header">
+                    <div class="window-controls">
+                        <span class="control close" onclick="closeWindow('terminal-window')"></span>
+                        <span class="control minimize"></span>
+                        <span class="control maximize"></span>
+                    </div>
+                    <div class="window-title">Terminal — About Me</div>
+                </div>
+                <div class="window-content terminal-content">
+                    <div class="terminal-text">
+                        <p class="terminal-prompt">Last login: <span id="login-time"></span> on ttys000</p>
+                        <p class="terminal-prompt">katherine@portfolio ~ %<span class="terminal-path"> whoami</span> </p>
+                        <div class="terminal-output"><p>Katherine Deborah</p></div>
+                        <p class="terminal-prompt">katherine@portfolio ~ %<span class="terminal-path"> cat about_me.txt</span> </p>
+                        <div class="terminal-output">
+                            <p>Hi! I'm Katherine, a Computer Science Master's student at the University of Southern California.</p>
+<p>I focus on Artificial Intelligence and Software Development, with a knack for turning data into insights. I’ve interned as a Data Analyst, working with large databases, preprocessing pipelines, and visualizations.</p>
+<p>My current work involves building with LLMs, deep learning, and machine learning. On the development side, I mostly code in Python, Flask, and JavaScript—infusing a bit of creative flair into everything I do.</p>
+<p>Current Focus:</p>
+<ul>
+  <li>AI model integration in real-world applications</li>
+  <li>Full-stack development</li>
+  <li>Data analysis and visualization</li>
+</ul>
+<p>When I'm not exploring AI or coding something new, you'll likely find me sketching, experimenting with new tools, or adding original touches to my projects.</p>
+<p>Feel free to browse this site like your desktop—check the <strong>~folder</strong> for projects, the <strong>gallery</strong> for art, and yes, you can play games too 😉</p>
+
+                        </div>
+                        <p class="terminal-prompt">katherine@portfolio ~ % <span class="cursor">|</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages Window (Contact) -->
+            <div id="messages-window" class="window messages-window">
+                <div class="window-header">
+                    <div class="window-controls">
+                        <span class="control close" onclick="closeWindow('messages-window')"></span>
+                        <span class="control minimize"></span>
+                        <span class="control maximize"></span>
+                    </div>
+                    <div class="window-title">Messages — Contact</div>
+                </div>
+                <div class="window-content messages-content">
+                    <div class="contact-info">
+                        <h3>Get in Touch</h3>
+                        <div class="contact-item">
+                            <span class="contact-label">Email:</span>
+                            <span class="contact-value">kath.deborah@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+    <span class="contact-label">LinkedIn:</span>
+    <span class="contact-value">
+        <a href="https://www.linkedin.com/in/Katherine-Deborah" target="_blank" rel="noopener noreferrer">
+            linkedin.com/in/katherine-deborah
+        </a>
+    </span>
+</div>
+<div class="contact-item">
+    <span class="contact-label">GitHub:</span>
+    <span class="contact-value">
+        <a href="https://github.com/Katherine-Deborah" target="_blank" rel="noopener noreferrer">
+            github.com/katherine-deborah
+        </a>
+    </span>
+</div>
+
+                        <div class="contact-item">
+                            <span class="contact-label">Location:</span>
+                            <span class="contact-value">Los Angeles, CA</span>
+                        </div>
+                        <form action="https://formsubmit.co/kath.deborah@gmail.com" method="POST" class="contact-form">
+    <h4>Send a Message</h4>
+    <input type="text" name="name" placeholder="Your Name" class="contact-input" required>
+    <input type="email" name="email" placeholder="Your Email" class="contact-input" required>
+    <textarea name="message" placeholder="Your Message" class="contact-textarea" required></textarea>
+
+    <!-- Optional: To prevent spam -->
+    <input type="hidden" name="_captcha" value="false">
+
+    <button type="submit" class="contact-button">Send Message</button>
+</form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Window (Skills) -->
+            <div id="settings-window" class="window settings-window">
+                <div class="window-header">
+                    <div class="window-controls">
+                        <span class="control close" onclick="closeWindow('settings-window')"></span>
+                        <span class="control minimize"></span>
+                        <span class="control maximize"></span>
+                    </div>
+                    <div class="window-title">System Preferences — Skills</div>
+                </div>
+                <div class="window-content settings-content">
+                    <div class="skills-container">
+                        <div class="skill-category">
+                            <h3>Programming Languages</h3>
+                            <div class="skill-grid">
+                                <div class="skill-item">
+                                    <span class="skill-name">Python</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-name">JavaScript</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-name">Java</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 50%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-name">C++</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Machine Learning</h3>
+                            <div class="skill-grid">
+                                <div class="skill-item">
+                                    <span class="skill-name">TensorFlow</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-name">PyTorch</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-name">Scikit-learn</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-name">Pandas/NumPy</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Web Technologies</h3>
+                            <div class="skill-grid">
+                                <div class="skill-item">
+                                    <span class="skill-name">React</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-name">Node.js</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-name">Flask</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-name">Postgres</span>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Finder Window -->
+            <div id="finder-window" class="window finder-window">
+                <div class="window-header">
+                    <div class="window-controls">
+                        <span class="control close" onclick="closeWindow('finder-window')"></span>
+                        <span class="control minimize"></span>
+                        <span class="control maximize"></span>
+                    </div>
+                    <div class="window-title">Finder</div>
+                </div>
+                <div class="window-content finder-content">
+                    <div class="finder-sidebar">
+                        <div class="sidebar-section">
+                            <h4>Favorites</h4>
+                            <div class="sidebar-item" onclick="showContent('about')">About Me</div>
+                            <div class="sidebar-item" onclick="showContent('skills')">Skills</div>
+                            <div class="sidebar-item" onclick="showContent('projects')">Projects</div>
+                            <div class="sidebar-item" onclick="showContent('contact')">Contact</div>
+                            <div class="sidebar-item" onclick="showContent('resume')">Resume</div>
+                            <!-- <div class="sidebar-item" onclick="showContent('blog')">Blog</div> -->
+                            <div class="sidebar-item" onclick="showContent('games')">Games</div>
+                            <div class="sidebar-item" onclick="showContent('gallery')">Gallery</div>
+                            
+                        </div>
+                    </div>
+                    <div class="finder-main">
+                        <div id="finder-content" class="finder-items">
+                            <div class="finder-item" onclick="openWindow('terminal-window')">
+                                <div class="finder-icon terminal-icon"></div>
+                                <span>About Me</span>
+                            </div>
+                            <div class="finder-item" onclick="openWindow('settings-window')">
+                                <div class="finder-icon settings-icon"></div>
+                                <span>Skills</span>
+                            </div>
+                            <div class="finder-item" onclick="showProjects()">
+                                <div class="finder-icon folder-icon"></div>
+                                <span>Projects</span>
+                            </div>
+                            <div class="finder-item" onclick="openWindow('resume-window')">
+                                <div class="finder-icon resume-icon"></div>
+                                <span>Resume</span>
+                            </div>
+                            <div class="finder-item" onclick="openWindow('messages-window')">
+                                <div class="finder-icon messages-icon"></div>
+                                <span>Contact</span>
+                            </div>
+                            <!-- <div class="finder-item" onclick="openWindow('blog-window')">
+                                <div class="finder-icon blog-icon"></div>
+                                <span>Blog</span>
+                            </div> -->
+                            <div class="finder-item" onclick="openWindow('games-window')">
+                                <div class="finder-icon games-icon"></div>
+                                <span>Games</span>
+                            </div>
+                            <div class="finder-item" onclick="openWindow('gallery-window')">
+                                <div class="finder-icon gallery-icon"></div>
+                                <span>Gallery</span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects Folder View -->
+            <div id="projects-folder" class="window projects-folder-window">
+                <div class="window-header">
+                    <div class="window-controls">
+                        <span class="control close" onclick="closeWindow('projects-folder')"></span>
+                        <span class="control minimize"></span>
+                        <span class="control maximize"></span>
+                    </div>
+                    <div class="window-title">Projects</div>
+                </div>
+                <div class="window-content finder-content">
+                    <div class="finder-main">
+                        <div class="finder-items">
+                            <div class="finder-item" onclick="openProjectCategory('sde')">
+                                <div class="finder-icon folder-icon sde-folder"></div>
+                                <span>SDE Projects</span>
+                            </div>
+                            <div class="finder-item" onclick="openProjectCategory('ml')">
+                                <div class="finder-icon folder-icon ml-folder"></div>
+                                <span>ML Projects</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resume Window -->
+            <div id="resume-window" class="window resume-window">
+                <div class="window-header">
+                    <div class="window-controls">
+                        <span class="control close" onclick="closeWindow('resume-window')"></span>
+                        <span class="control minimize"></span>
+                        <span class="control maximize"></span>
+                    </div>
+                    <div class="window-title">Resume — Katherine</div>
+                </div>
+                <div class="window-content resume-content">
+                    <div class="resume-toolbar">
+                        <button class="resume-btn" onclick="downloadResume()">📥 Download PDF</button>
+                        <button class="resume-btn" onclick="printResume()">🖨️ Print</button>
+                    </div>
+                    <div class="resume-viewer">
+                        <div class="resume-header">
+                            <h1>Katherine Deborah</h1>
+                            <div class="contact-line">
+                                <span>kath.deborah@gmail.com</span> | 
+                                <span>(213) 843-0195</span> | 
+                                <span>Los Angeles, CA</span>
+                            </div>
+                        </div>
+                        <div class="resume-section">
+                            <h2>Experience</h2>
+                            <div class="job">
+                                <div class="job-header">
+                                    <h3>Data Analyst</h3>
+                                    <span class="date">2023</span>
+                                </div>
+                                <div class="company">Department of Telecommunication, Government of India</div>
+                                <ul>
+                                    <li>Led development of machine learning platform serving 1M+ users</li>
+                                    <li>Architected microservices infrastructure reducing latency by 40%</li>
+                                    <li>Mentored 5 junior developers and established coding standards</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="resume-section">
+                            <h2>Education</h2>
+                            <div class="education">
+                                <h3>Master of Science in Computer Science</h3>
+                                <div class="school">Stanford University - 2020</div>
+                            </div>
+                        </div>
+                        <div class="resume-section">
+                            <h2>Skills</h2>
+                            <div class="skills-list">
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">JavaScript</span>
+                                <span class="skill-tag">React</span>
+                                <span class="skill-tag">TensorFlow</span>
+                                <span class="skill-tag">Docker</span>
+                                <span class="skill-tag">AWS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Window -->
+            <div id="blog-window" class="window blog-window">
+                <div class="window-header">
+                    <div class="window-controls">
+                        <span class="control close" onclick="closeWindow('blog-window')"></span>
+                        <span class="control minimize"></span>
+                        <span class="control maximize"></span>
+                    </div>
+                    <div class="window-title">Blog Posts</div>
+                </div>
+                <div class="window-content blog-content">
+                    <div class="blog-posts">
+                        <article class="blog-post" onclick="openBlogPost('ai-trends')">
+                            <div class="post-date">Dec 15, 2024</div>
+                            <h3>The Future of AI in Software Development</h3>
+                            <p>Exploring how artificial intelligence is reshaping the way we build software...</p>
+                            <div class="post-tags">
+                                <span class="tag">AI</span>
+                                <span class="tag">Development</span>
+                            </div>
+                        </article>
+                        <article class="blog-post" onclick="openBlogPost('ml-deployment')">
+                            <div class="post-date">Nov 28, 2024</div>
+                            <h3>ML Model Deployment Best Practices</h3>
+                            <p>A comprehensive guide to deploying machine learning models in production...</p>
+                            <div class="post-tags">
+                                <span class="tag">ML</span>
+                                <span class="tag">DevOps</span>
+                            </div>
+                        </article>
+                        <article class="blog-post" onclick="openBlogPost('react-performance')">
+                            <div class="post-date">Oct 12, 2024</div>
+                            <h3>React Performance Optimization</h3>
+                            <p>Tips and tricks for building lightning-fast React applications...</p>
+                            <div class="post-tags">
+                                <span class="tag">React</span>
+                                <span class="tag">Performance</span>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Games Window -->
+            <div id="games-window" class="window games-window">
+                <div class="window-header">
+                    <div class="window-controls">
+                        <span class="control close" onclick="closeWindow('games-window')"></span>
+                        <span class="control minimize"></span>
+                        <span class="control maximize"></span>
+                    </div>
+                    <div class="window-title">Games Portfolio</div>
+                </div>
+                <div class="window-content games-content">
+                    <div class="games-grid">
+                        <div class="game-item" onclick="playGame('space')">
+                            <div class="game-preview">🚀</div>
+                            <h4>Space Defender Game</h4>
+                            <p>3D spaceship survival game built with Three.js</p>
+                            <button class="play-btn">Play Game</button>
+                        </div>
+                        <div class="game-item" onclick="playGame('jump')">
+                            <div class="game-preview">📷</div>
+                            <h4>Pixel Gesture Jump Game</h4>
+                            <p>Jump game controlled by real-time hand tracking.</p>
+                            <button class="play-btn">Play Game</button>
+                        </div>
+                        <div class="game-item" onclick="playGame('cube')">
+                            <div class="game-preview">🧩</div>
+                            <h4>Personalized Rubiks Solver</h4>
+                            <p>Interactive Rubik’s Solver with 3D cube & step guide</p>
+                            <button class="play-btn">Play Game</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Window -->
+            <div id="gallery-window" class="window gallery-window">                 
+    <div class="window-header">                     
+        <div class="window-controls">                         
+            <span class="control close" onclick="closeWindow('gallery-window')"></span>                         
+            <span class="control minimize"></span>                         
+            <span class="control maximize"></span>                     
+        </div>                     
+        <div class="window-title">Art Gallery</div>                 
+    </div>                 
+    <div class="window-content gallery-content">                     
+        <div class="gallery-grid">                         
+            <div class="artwork" onclick="viewArtwork('image-1')">         
+                <div class="art-preview">             
+                    <img src="images/image-1.jpg" alt="Abstract Digital #1" style="width: 100%; height: 100%; object-fit: cover;">         
+                </div>     
+            </div>     
+            <div class="artwork" onclick="viewArtwork('image-2')">         
+                <div class="art-preview">             
+                    <img src="images/image-2.jpg" alt="Portrait Study" style="width: 100%; height: 100%; object-fit: cover;">         
+                </div>     
+            </div>     
+            <div class="artwork" onclick="viewArtwork('image-3')">         
+                <div class="art-preview">             
+                    <img src="images/image-3.jpg" alt="Digital Landscape" style="width: 100%; height: 100%; object-fit: cover;">         
+                </div>     
+            </div>     
+            <div class="artwork" onclick="viewArtwork('image-4')">         
+                <div class="art-preview">             
+                    <img src="images/image-4.jpg" alt="Geometric Forms" style="width: 100%; height: 100%; object-fit: cover;">         
+                </div>     
+            </div>
+            <div class="artwork" onclick="viewArtwork('image-5')">         
+                <div class="art-preview">             
+                    <img src="images/image-5.jpg" alt="Abstract Digital #1" style="width: 100%; height: 100%; object-fit: cover;">         
+                </div>     
+            </div>     
+            <div class="artwork" onclick="viewArtwork('image-6')">         
+                <div class="art-preview">             
+                    <img src="images/image-6.jpg" alt="Portrait Study" style="width: 100%; height: 100%; object-fit: cover;">         
+                </div>     
+            </div>     
+            <div class="artwork" onclick="viewArtwork('image-7')">         
+                <div class="art-preview">             
+                    <img src="images/image-7.jpg" alt="Digital Landscape" style="width: 100%; height: 100%; object-fit: cover;">         
+                </div>     
+            </div>     
+            <div class="artwork" onclick="viewArtwork('image-8')">         
+                <div class="art-preview">             
+                    <img src="images/image-8.jpg" alt="Geometric Forms" style="width: 100%; height: 100%; object-fit: cover;">         
+                </div>     
+            </div>  
+        </div>                                          
+    </div>             
+</div>
+
+            <!-- Help Window -->
+            <div id="help-window" class="window help-window">
+                <div class="window-header">
+                    <div class="window-controls">
+                        <span class="control close" onclick="closeWindow('help-window')"></span>
+                        <span class="control minimize"></span>
+                        <span class="control maximize"></span>
+                    </div>
+                    <div class="window-title">Portfolio Help</div>
+                </div>
+                <div class="window-content help-content">
+                    <div class="help-sections">
+                        <div class="help-section">
+                            <h3>🔍 Navigation</h3>
+                            <ul>
+                                <li><strong>Finder:</strong> Click the folder icon in the dock to browse all portfolio sections</li>
+                                <li><strong>Projects:</strong> View my development projects organized by category</li>
+                                <li><strong>Drag & Drop:</strong> All windows can be dragged around the screen</li>
+                            </ul>
+                        </div>
+                        <div class="help-section">
+                            <h3>📱 Applications</h3>
+                            <ul>
+                                <li><strong>Terminal:</strong> Learn about me and my background</li>
+                                <li><strong>Messages:</strong> Contact information and message form</li>
+                                <li><strong>System Preferences:</strong> Technical skills and expertise</li>
+                                <li><strong>Resume:</strong> Professional experience and education</li>
+                                <li><strong>Blog:</strong> My latest articles and thoughts</li>
+                                <li><strong>Games:</strong> Interactive games I've developed</li>
+                                <li><strong>Gallery:</strong> Digital art and creative work</li>
+                            </ul>
+                        </div>
+                        <div class="help-section">
+                            <h3>⌨️ Shortcuts</h3>
+                            <ul>
+                                <li><strong>Cmd/Ctrl + W:</strong> Close active window</li>
+                                <li><strong>Cmd/Ctrl + T:</strong> Open terminal</li>
+                                <li><strong>🌓:</strong> Toggle dark/light mode</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dock -->
+        <div class="dock">
+            <div class="dock-item" onclick="openWindow('finder-window')" title="Finder">
+                <div class="dock-icon finder-dock-icon"></div>
+            </div>
+            <div class="dock-item" onclick="openWindow('terminal-window')" title="Terminal">
+                <div class="dock-icon terminal-dock-icon"></div>
+            </div>
+            <div class="dock-item" onclick="openWindow('messages-window')" title="Messages">
+                <div class="dock-icon messages-dock-icon"></div>
+            </div>
+            <div class="dock-item" onclick="openWindow('settings-window')" title="System Preferences">
+                <div class="dock-icon settings-dock-icon"></div>
+            </div>
+            <div class="dock-separator"></div>
+            <div class="dock-item" onclick="openWindow('resume-window')" title="Resume">
+                <div class="dock-icon resume-dock-icon"></div>
+            </div>
+            <div class="dock-item" onclick="openWindow('blog-window')" title="Blog">
+                <div class="dock-icon blog-dock-icon"></div>
+            </div>
+            <div class="dock-item" onclick="openWindow('games-window')" title="Games">
+                <div class="dock-icon games-dock-icon"></div>
+            </div>
+            <div class="dock-item" onclick="openWindow('gallery-window')" title="Gallery">
+                <div class="dock-icon gallery-dock-icon"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+=======
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Katherine Gnanaraj | AI Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <h1>Katherine Deborah Gnanaraj</h1>
+      <p>AI | Machine Learning | Robotics | Reinforcement Learning</p>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#blog">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <button id="theme-toggle" aria-label="Toggle Dark Mode">🌓</button>
+
+  <section id="about" class="container">
+    <h2>About Me</h2>
+    <p>I’m a Master's student in Computer Science at USC, focused on AI and real-world applications like fraud detection, RL for traffic systems, and generative models. Passionate about building robust ML systems and experimenting with cutting-edge tools.</p>
+    <a href="resume.pdf" class="btn" target="_blank">Download Resume</a>
+  </section>
+
+  <section id="projects" class="container">
+    <h2>Projects</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Real-Time Fraud Detection System</h3>
+        <p>Kafka + Airflow + MLFlow + Docker + GCP | Streaming financial data for real-time fraud detection with model logging and cloud deployment.</p>
+        <a href="https://github.com/yourusername/fraud-detection" target="_blank">View on GitHub</a>
+      </div>
+      <div class="card">
+        <h3>GPU Monitoring Dashboard</h3>
+        <p>Flask + SocketIO + NVML | Real-time GPU metrics with sleek UI and socket-based live updates.</p>
+        <a href="https://github.com/yourusername/gpu-dashboard" target="_blank">View on GitHub</a>
+      </div>
+      <!-- Add more cards -->
+    </div>
+  </section>
+
+  <section id="skills" class="container">
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <span>Python</span>
+      <span>PyTorch</span>
+      <span>TensorFlow</span>
+      <span>Kafka</span>
+      <span>Docker</span>
+      <span>Airflow</span>
+      <span>RL / MARL</span>
+      <span>MLFlow</span>
+      <span>GCP / AWS</span>
+    </div>
+  </section>
+
+  <section id="blog" class="container">
+    <h2>Blog & Notes</h2>
+    <ul class="blog-list">
+      <li><a href="#">How I Built a Real-Time GPU Dashboard in One Day</a></li>
+      <li><a href="#">Reinforcement Learning for Traffic Optimization — My Approach</a></li>
+      <li><a href="#">Learning Kafka and Airflow from Scratch</a></li>
+    </ul>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Katherine Gnanaraj | <a href="mailto:you@example.com">Contact Me</a></p>
+    </div>
+  </footer>
+
+  <!-- ✅ Theme Toggle Script (works after DOM load) -->
+  <script>
+    const toggleBtn = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+
+    toggleBtn.addEventListener('click', () => {
+      const newTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+  </script>
+
+</body>
+</html>
+>>>>>>> fd40edbbb49fe8421b5cb6b10067676739a5228a

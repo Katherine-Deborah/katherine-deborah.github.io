@@ -1,0 +1,1166 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-primary: #000;
+    --bg-secondary: rgba(40, 40, 40, 0.9);
+    --bg-tertiary: rgba(30, 30, 30, 0.95);
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --accent: #4a9eff;
+    --window-bg: rgba(40, 40, 40, 0.95);
+    --menu-bg: rgba(40, 40, 40, 0.9);
+    --dock-bg: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="light"] {
+    --bg-primary: #f0f0f0;
+    --bg-secondary: rgba(255, 255, 255, 0.95);
+    --bg-tertiary: rgba(250, 250, 250, 0.95);
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --accent: #007aff;
+    --window-bg: rgba(255, 255, 255, 0.95);
+    --menu-bg: rgba(255, 255, 255, 0.9);
+    --dock-bg: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow: hidden;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Loading Screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.loading-content {
+    text-align: center;
+    color: white;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-size: 16px;
+    color: #ccc;
+}
+
+/* Desktop */
+.desktop {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+
+    /* Base gradient background applied once across the screen */
+    background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+
+    /* Grid lines on top using pseudo-element */
+}
+
+.desktop::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* So it doesn't interfere with interaction */
+    background-image:
+        linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 1;
+}
+
+.desktop-background {
+    position: absolute;
+    top: 22px;
+    left: 0;
+    right: 0;
+    bottom: 80px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+}
+
+/* Menu Bar */
+.menu-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 22px;
+    background: var(--menu-bg);
+    backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 13px;
+    color: var(--text-primary);
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-toggle {
+    cursor: pointer;
+    padding: 2px 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+    margin-right: 10px;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.menu-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.apple-logo {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.menu-items {
+    display: flex;
+    gap: 15px;
+}
+
+.menu-item {
+    cursor: pointer;
+    padding: 2px 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.menu-bar-right {
+    font-size: 12px;
+}
+
+/* Windows */
+.windows-container {
+    position: absolute;
+    top: 22px;
+    left: 0;
+    right: 0;
+    bottom: 80px;
+    /* FIXED: Remove any properties that create stacking context */
+}
+
+/* FIXED: Simplified window styles without backdrop-filter creating stacking context issues */
+.window {
+    position: absolute;
+    background: var(--window-bg);
+    border-radius: 8px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: none;
+    min-width: 400px;
+    min-height: 300px;
+    /* Remove backdrop-filter temporarily to fix stacking context */
+    /* backdrop-filter: blur(20px); */
+}
+
+/* Alternative backdrop effect using pseudo-element that doesn't affect stacking */
+.window::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(20px);
+    border-radius: 8px;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.window-header {
+    height: 28px;
+    background: rgba(60, 60, 60, 0.8);
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+.window-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.control.close {
+    background: #ff5f57;
+}
+
+.control.minimize {
+    background: #ffbd2e;
+}
+
+.control.maximize {
+    background: #28ca42;
+}
+
+.control:hover {
+    opacity: 0.8;
+}
+
+.window-title {
+    flex: 1;
+    text-align: center;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.window-content {
+    padding: 20px;
+    color: white;
+    height: calc(100% - 28px);
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* Terminal Window */
+.terminal-window {
+    width: 800px;
+    height: 500px;
+    top: 50px;
+    left: 100px;
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+}
+
+.terminal-content {
+    background: #1e1e1e;
+    padding: 15px;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.terminal-prompt {
+    color: #a0a0a0;
+    margin-bottom: 5px;
+}
+
+.terminal-output {
+    color: #ffffff;
+    margin: 5px 0;
+    margin-left: 0;
+}
+
+.terminal-output p {
+    color: #28ca42;
+    margin: 2px 0;
+}
+
+.terminal-path {
+    color: #dece67;
+    font-weight: bold;
+}
+
+.cursor {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* Messages Window */
+.messages-window {
+    width: 500px;
+    height: 500px;
+    top: 80px;
+    right: 100px;
+}
+
+.contact-info {
+    padding: 10px;
+}
+
+.contact-info h3 {
+    margin-bottom: 20px;
+    color: #4b4b4b;
+    font-size: 18px;
+}
+.contact-value a {
+    color: #4b4b4b;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+.contact-item {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.contact-label {
+    font-weight: 600;
+    width: 80px;
+    color: #ccc;
+}
+
+.contact-value {
+    color: #4b4b4b;
+    cursor: pointer;
+}
+
+.contact-form {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-form h4 {
+    margin-bottom: 15px;
+    color: #4b4b4b;
+}
+
+.contact-input, .contact-textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: #4b4b4b;
+    font-size: 13px;
+}
+
+.contact-textarea {
+    height: 80px;
+    resize: vertical;
+}
+
+.contact-button {
+    background: #4a9eff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.2s;
+}
+
+.contact-button:hover {
+    background: #357abd;
+}
+
+/* Settings Window */
+.settings-window {
+    width: 600px;
+    height: 500px;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.skills-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.skill-category h3 {
+    color: #4b4b4b;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.skill-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.skill-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.skill-name {
+    width: 120px;
+    font-size: 13px;
+    color: #666565;
+}
+
+.skill-bar {
+    flex: 1;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #4a9eff 0%, #28ca42 100%);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+/* Finder Window */
+.finder-window {
+    width: 700px;
+    height: 500px;
+    top: 50px;
+    left: 150px;
+}
+
+.finder-content {
+    display: flex;
+    padding: 0;
+    height: 100%;
+    background: rgba(30, 30, 30, 0.95);
+    border-radius: 0 0 8px 8px;
+}
+
+.finder-sidebar {
+    width: 200px;
+    background: rgba(40, 40, 40, 0.9);
+    padding: 15px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0 0 0 8px;
+}
+
+.sidebar-section h4 {
+    color: #a0a0a0;
+    font-size: 12px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-item {
+    padding: 8px 12px;
+    color: #ccc;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 13px;
+    transition: background 0.2s;
+    margin-bottom: 2px;
+}
+
+.sidebar-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.finder-main {
+    flex: 1;
+    padding: 20px;
+    background: rgba(25, 25, 25, 0.95);
+    border-radius: 0 0 8px 0;
+}
+
+.finder-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 20px;
+}
+
+.finder-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background 0.2s;
+    text-align: center;
+}
+
+.finder-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.finder-item span {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #ccc;
+}
+
+.finder-icon {
+    width: 48px;
+    height: 48px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.terminal-icon {
+    background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+    border-radius: 8px;
+    position: relative;
+}
+
+.terminal-icon::after {
+    content: ">";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #4a9eff;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.messages-icon {
+    background: linear-gradient(135deg, #4a9eff 0%, #357abd 100%);
+    border-radius: 12px;
+    position: relative;
+}
+
+.messages-icon::after {
+    content: "💬";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+}
+
+.settings-icon {
+    background: linear-gradient(135deg, #666 0%, #999 100%);
+    border-radius: 12px;
+    position: relative;
+}
+
+.settings-icon::after {
+    content: "⚙️";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+}
+
+.folder-icon {
+    background: linear-gradient(135deg, #4a9eff 0%, #357abd 100%);
+    border-radius: 8px;
+    position: relative;
+}
+
+.folder-icon::after {
+    content: "📁";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+}
+
+.sde-folder::after {
+    content: "💻";
+}
+
+.ml-folder::after {
+    content: "🤖";
+}
+
+/* Projects Folder Window */
+.projects-folder-window {
+    width: 600px;
+    height: 400px;
+    top: 80px;
+    left: 200px;
+}
+
+/* Dock */
+.dock {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    padding: 8px;
+    display: flex;
+    gap: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.dock-item {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.dock-item:hover {
+    transform: scale(1.2) translateY(-10px);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.dock-separator {
+    width: 1px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.3);
+    margin: 6px 4px;
+}
+
+.dock-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.finder-dock-icon {
+    background: linear-gradient(135deg, #4a9eff 0%, #357abd 100%);
+    position: relative;
+}
+
+.finder-dock-icon::after {
+    content: "📁";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+}
+
+.terminal-dock-icon {
+    background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+    position: relative;
+}
+
+.terminal-dock-icon::after {
+    content: ">";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #4a9eff;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.messages-dock-icon {
+    background: linear-gradient(135deg, #4a9eff 0%, #357abd 100%);
+    position: relative;
+}
+
+.messages-dock-icon::after {
+    content: "💬";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+}
+
+.settings-dock-icon {
+    background: linear-gradient(135deg, #666 0%, #999 100%);
+    position: relative;
+}
+
+.settings-dock-icon::after {
+    content: "⚙️";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+}
+
+/* New Window Styles */
+.resume-window, .blog-window, .games-window, .gallery-window, .help-window {
+    width: 650px;
+    height: 500px;
+    top: 60px;
+    left: 200px;
+}
+
+/* Resume Window */
+.resume-content {
+    padding: 0;
+}
+
+.resume-toolbar {
+    background: var(--bg-secondary);
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    gap: 10px;
+}
+
+.resume-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.2s;
+}
+
+.resume-btn:hover {
+    opacity: 0.8;
+}
+
+.resume-viewer {
+    padding: 30px;
+    max-height: 400px;
+    overflow-y: auto;
+    color: var(--text-primary);
+}
+
+.resume-header h1 {
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.contact-line {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.resume-section {
+    margin-bottom: 25px;
+}
+
+.resume-section h2 {
+    color: var(--accent);
+    margin-bottom: 15px;
+    font-size: 18px;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 5px;
+}
+
+.job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.job h3 {
+    color: var(--text-primary);
+    font-size: 16px;
+}
+
+.date {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.company {
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.job ul {
+    margin-left: 20px;
+}
+
+.job li {
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+}
+
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-tag {
+    background: var(--accent);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+/* Blog Window */
+.blog-posts {
+    max-height: 430px;
+    overflow-y: auto;
+}
+
+.blog-post {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.blog-post:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.post-date {
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.blog-post h3 {
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.blog-post p {
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.post-tags {
+    display: flex;
+    gap: 8px;
+}
+
+.tag {
+    background: rgba(74, 158, 255, 0.2);
+    color: var(--accent);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+}
+
+/* Games Window */
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    max-height: 430px;
+    overflow-y: auto;
+}
+
+.game-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+}
+
+.game-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.game-preview {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.game-item h4 {
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.game-item p {
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.play-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.2s;
+}
+
+.play-btn:hover {
+    opacity: 0.8;
+}
+
+/* Gallery Window */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    max-height: 430px;
+    overflow-y: auto;
+}
+
+.artwork {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.artwork:hover {
+    transform: scale(1.05);
+}
+
+.art-preview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: end;
+    padding: 15px;
+    position: relative;
+}
+
+.art-title {
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Help Window */
+.help-sections {
+    max-height: 430px;
+    overflow-y: auto;
+}
+
+.help-section {
+    margin-bottom: 25px;
+}
+
+.help-section h3 {
+    color: var(--accent);
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.help-section ul {
+    margin-left: 20px;
+}
+
+.help-section li {
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.help-section strong {
+    color: var(--text-primary);
+}
+
+/* New Dock Icons */
+.resume-dock-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+}
+
+.resume-dock-icon::after {
+    content: "📄";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+}
+
+.blog-dock-icon {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    position: relative;
+}
+
+.blog-dock-icon::after {
+    content: "📝";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+}
+
+.games-dock-icon {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    position: relative;
+}
+
+.games-dock-icon::after {
+    content: "🎮";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+}
+
+.gallery-dock-icon {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    position: relative;
+}
+
+.gallery-dock-icon::after {
+    content: "🎨";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+}
+
+/* Finder Icons */
+.resume-icon, .blog-icon, .games-icon, .gallery-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.resume-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.resume-icon::after {
+    content: "📄";
+}
+
+.blog-icon {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.blog-icon::after {
+    content: "📝";
+}
+
+.games-icon {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.games-icon::after {
+    content: "🎮";
+}
+
+.gallery-icon {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.gallery-icon::after {
+    content: "🎨";
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .window {
+        width: 90vw !important;
+        height: 70vh !important;
+        top: 10vh !important;
+        left: 5vw !important;
+        transform: none !important;
+    }
+    
+    .dock {
+        bottom: 5px;
+        padding: 6px;
+        gap: 6px;
+    }
+    
+    .dock-item {
+        width: 44px;
+        height: 44px;
+    }
+    
+    .dock-icon {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .finder-content {
+        flex-direction: column;
+    }
+    
+    .finder-sidebar {
+        width: 100%;
+        height: 120px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .sidebar-section {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+    
+    .sidebar-item {
+        margin-bottom: 0;
+    }
+}
