@@ -248,6 +248,230 @@
                             </div>
              </div> -->
 
+             <div id="projects-window" class="window projects-window">
+    <div class="window-header">
+        <div class="window-controls">
+            <span class="control close" onclick="closeWindow('projects-window')"></span>
+            <span class="control minimize"></span>
+            <span class="control maximize"></span>
+        </div>
+        <div class="window-title">My Projects</div>
+    </div>
+    <div class="window-content">
+        <div class="filter-tabs">
+            <button class="filter-btn active" onclick="filterProjects('all')">All</button>
+            <button class="filter-btn" onclick="filterProjects('sde')">SDE</button>
+            <button class="filter-btn" onclick="filterProjects('ml')">ML</button>
+        </div>
+        <div class="project-list" id="projects-list">
+            <!-- Projects will be dynamically loaded here -->
+        </div>
+    </div>
+</div>
+<script>
+// Modified showProjects function to work with openWindow
+function showProjects() {
+    openWindow('projects-window');
+    // Load all projects when window opens
+    loadProjectsInWindow('all');
+}
+
+// New function to load projects directly into the projects window
+function loadProjectsInWindow(category = 'all') {
+    const projects = {
+        sde: [
+            {
+                name: 'Influencer Engagement & Sponsorship Coordination Platform',
+                url: 'https://github.com/Katherine-Deborah/iescp',
+                description: 'A full-stack platform enabling sponsors and influencers to collaborate seamlessly. Includes campaign management, ad request coordination, and performance tracking features.',
+                tech_stack: ['Flask', 'Vue.js', 'SQLite', 'Celery', 'Redis']
+            },
+            {
+                name: 'EduBridge',
+                url: 'https://github.com/Katherine-Deborah/edubridge/tree/master/student-dashboard',
+                description: 'A modern web app for teachers to track and manage student learning progress, featuring dashboards, reflection analysis, session timelines, and tools for data export and reminders.',
+                tech_stack: ['React', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'Docker']
+            },
+            {
+                name: 'Portfolio Website',
+                url: '#',
+                description: 'The interactive portfolio website you are currently viewing!',
+                tech_stack: ['HTML', 'CSS', 'JavaScript']
+            }
+        ],
+        ml: [
+            {
+                name: 'Video Analysis Q&A System',
+                url: 'https://github.com/Katherine-Deborah/Video-Analysis-Q-A-Sytem',
+                description: 'An AI-powered tool combining image captioning, audio transcription, and a chatbot to answer questions about an uploaded video.',
+                tech_stack: ['Python', 'Streamlit', 'PyTorch', 'OpenCV', 'Transformers', 'SQLite']
+            },
+            {
+                name: 'Diabetic Retinopathy Detection',
+                url: 'https://github.com/Katherine-Deborah/diabetic-retinopathy-detection',
+                description: 'A medical imaging pipeline that preprocesses retinal scans, extracts features using GoogLeNet and ResNet, and classifies using a Radial SVM.',
+                tech_stack: ['scikit-learn', 'PyTorch', 'OpenCV', 'NumPy']
+            },
+            {
+                name: '3D Traveling Salesman Problem',
+                url: '#',
+                description: 'An implementation of a Genetic Algorithm to solve the 3D Traveling Salesman Problem in Python.',
+                tech_stack: ['Python', 'SciPy']
+            }
+        ]
+    };
+
+    // Get all projects or filter by category
+    let displayProjects = [];
+    if (category === 'all') {
+        displayProjects = [...projects.sde, ...projects.ml].map(project => ({
+            ...project,
+            category: projects.sde.includes(project) ? 'SDE' : 'ML'
+        }));
+    } else {
+        displayProjects = projects[category].map(project => ({
+            ...project,
+            category: category.toUpperCase()
+        }));
+    }
+
+    // Update the projects list in the window
+    const projectsList = document.getElementById('projects-list');
+    if (projectsList) {
+        projectsList.innerHTML = displayProjects.map(project => `
+            <div class="project-item" onclick="openProject('${project.url}')">
+                <div class="project-info">
+                    <h4>${project.name}</h4>
+                    <p>${project.description}</p>
+                    <div class="tech-stack">
+                        ${project.tech_stack.map(tech => 
+                            `<span class="tech-tag">${tech}</span>`
+                        ).join('')}
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Update filter button states
+    updateFilterButtons(category);
+}
+
+// Function to update filter button states
+function updateFilterButtons(activeCategory) {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent.toLowerCase() === activeCategory || 
+            (btn.textContent === 'All' && activeCategory === 'all')) {
+            btn.classList.add('active');
+        }
+    });
+}
+
+// Modified filterProjects function
+function filterProjects(category) {
+    loadProjectsInWindow(category);
+}
+
+// Keep the openProject function as is
+function openProject(url) {
+    if (url === '#') {
+        alert('This project demo is coming soon!');
+        return;
+    }
+    window.open(url, '_blank');
+}
+</script>
+
+<style>
+/* Add these styles to your CSS file or in a <style> tag */
+.projects-window .window-content {
+    padding: 0;
+}
+
+.project-list {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.project-item {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.project-item:hover {
+    background: #f8f9fa;
+    border-color: #007acc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.project-info h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 18px;
+}
+
+.project-info p {
+    margin: 0 0 15px 0;
+    color: #666;
+    line-height: 1.5;
+}
+
+.filter-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 20px 20px 0 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background: #e0e0e0;
+}
+
+.filter-btn.active {
+    background: #007acc;
+    color: white;
+    border-color: #005999;
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.tech-tag {
+    background: #f0f8ff;
+    border: 1px solid #007acc;
+    color: #005999;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+}
+</style>
+
             <div id="finder-window" class="window finder-window">
                 <div class="window-header">
                     <div class="window-controls">
