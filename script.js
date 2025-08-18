@@ -196,7 +196,7 @@ function openProjectCategory(category = 'all') {
             },
             {
                 name: 'Portfolio Website',
-                url: '#',
+                url: null,
                 description: 'The interactive portfolio website you are currently viewing!',
                 tech_stack: ['HTML', 'CSS', 'JavaScript']
             }
@@ -216,7 +216,7 @@ function openProjectCategory(category = 'all') {
             },
             {
                 name: '3D Traveling Salesman Problem',
-                url: '#',
+                url: null,
                 description: 'An implementation of a Genetic Algorithm to solve the 3D Traveling Salesman Problem in Python.',
                 tech_stack: ['Python', 'SciPy']
             }
