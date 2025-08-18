@@ -36,28 +36,31 @@ function updateTime() {
 }
 
 // Window management functions
-function openWindow(windowId, forceToTop = false) {
+function openWindow(windowId, forceToTop = true) {
+    console.log('Opening window:', windowId);
     const window = document.getElementById(windowId);
     if (!window) return;
     
     window.style.display = 'block';
     
-    if (forceToTop) {
-        // Force this window to be on top of everything
-        windowZIndex = windowZIndex + 1;
-        window.style.zIndex = windowZIndex;
-    } else {
-        // Get the highest z-index from all visible windows
-        const allWindows = document.querySelectorAll('.window[style*="display: block"]');
-        let maxZ = 100;
-        allWindows.forEach(w => {
-            const z = parseInt(w.style.zIndex) || 0;
-            maxZ = Math.max(maxZ, z);
+    const allWindows = document.querySelectorAll('.window[style*="display: block"]');
+    let maxZ = 100;
+    allWindows.forEach(w => {
+        const z = parseInt(w.style.zIndex) || 0;
+        maxZ = Math.max(maxZ, z);
+        console.log('Window:', w.id, 'Z-index:', z);
+    });
+    
+    windowZIndex = maxZ + 1;
+    window.style.zIndex = windowZIndex;
+    
+    // Force window to top after a brief delay
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            window.style.zIndex = windowZIndex + 1;
         });
-        
-        windowZIndex = maxZ + 1;
-        window.style.zIndex = windowZIndex;
-    }
+    });
+    console.log('Set', windowId, 'z-index to:', windowZIndex);
     
     activeWindows.add(windowId);
     makeWindowDraggable(window);
@@ -66,7 +69,6 @@ function openWindow(windowId, forceToTop = false) {
         startTerminalCursor();
     }
 }
-
 function closeWindow(windowId) {
     const window = document.getElementById(windowId);
     if (!window) return;
@@ -202,13 +204,13 @@ function openProjectCategory(category = 'all') {
         ml: [
             {
                 name: 'Video Analysis Q&A System',
-                url: '#',
+                url: 'https://github.com/Katherine-Deborah/Video-Analysis-Q-A-Sytem',
                 description: 'An AI-powered tool combining image captioning, audio transcription, and a chatbot to answer questions about an uploaded video.',
                 tech_stack: ['Python', 'Streamlit', 'PyTorch', 'OpenCV', 'Transformers', 'SQLite']
             },
             {
                 name: 'Diabetic Retinopathy Detection',
-                url: '#',
+                url: 'https://github.com/Katherine-Deborah/diabetic-retinopathy-detection',
                 description: 'A medical imaging pipeline that preprocesses retinal scans, extracts features using GoogLeNet and ResNet, and classifies using a Radial SVM.',
                 tech_stack: ['scikit-learn', 'PyTorch', 'OpenCV', 'NumPy']
             },
@@ -224,13 +226,7 @@ function openProjectCategory(category = 'all') {
     // Close the projects folder window since we're opening the actual project list
     closeWindow('projects-folder');
 
-    // FIXED: Ensure project window appears above finder
-    const finderWindow = document.getElementById('finder-window');
-    if (finderWindow) {
-        const currentFinderZ = parseInt(finderWindow.style.zIndex) || 0;
-        // Make sure the next window will be above finder
-        windowZIndex = Math.max(windowZIndex, currentFinderZ + 1);
-    }
+
 
     // Get all projects or filter by category
     let displayProjects = [];
@@ -400,21 +396,27 @@ function openProject(url) {
 }
 
 // Contact form submission
-function submitContactForm() {
-    const name = document.querySelector('.contact-input[placeholder="Your Name"]').value;
-    const email = document.querySelector('.contact-input[placeholder="Your Email"]').value;
-    const message = document.querySelector('.contact-textarea').value;
+document.querySelector('.contact-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
     
-    if (name && email && message) {
-        alert('Thank you for your message! I\'ll get back to you soon.');
-        // Clear form
-        document.querySelector('.contact-input[placeholder="Your Name"]').value = '';
-        document.querySelector('.contact-input[placeholder="Your Email"]').value = '';
-        document.querySelector('.contact-textarea').value = '';
-    } else {
-        alert('Please fill in all fields.');
+    const formData = new FormData(this);
+    
+    try {
+        const response = await fetch(this.action, {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (response.ok) {
+            alert('Thank you for your message! I\'ll get back to you soon.');
+            this.reset(); // Clear form
+        } else {
+            alert('Sorry, there was an error sending your message. Please try again.');
+        }
+    } catch (error) {
+        alert('Sorry, there was an error sending your message. Please try again.');
     }
-}
+});
 
 // Add click handler for contact form submit button
 document.addEventListener('DOMContentLoaded', function() {
@@ -559,15 +561,15 @@ function showHelp() {
 function downloadResume() {
     // Create a fake PDF download
     const link = document.createElement('a');
-    link.href = 'data:application/pdf;base64,'; // You would put actual PDF data here
-    link.download = 'Katherine_Resume.pdf';
+    link.href = 'Katherine_Deborah.pdf'; // You would put actual PDF data here
+    link.download = 'Katherine_Deborah.pdf';
     link.style.display = 'none';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     
     // Show notification
-    alert('Resume download started! (In a real implementation, this would download your actual resume PDF)');
+    alert('Resume download started!');
 }
 
 function printResume() {
@@ -629,14 +631,14 @@ function playGame(gameId) {
     const gameLinks = {
         'space': 'https://space-defender-game.vercel.app/',
         'jump': 'https://gesture-jump-game.vercel.app/',
-        'cube': 'games/pong/index.html'
+        'cube': null
     };
 
     const gameUrl = gameLinks[gameId];
     if (gameUrl) {
         window.open(gameUrl, '_blank'); // Opens the game in a new tab
     } else {
-        alert("Game not found!");
+        alert("Game will be up soon!");
     }
 }
 
