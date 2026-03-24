@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<<<<<<< HEAD
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Katherine's Portfolio</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
     <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
         <div class="loading-content">
             <div class="loading-spinner"></div>
-            <p class="loading-text">Initialising Katherine's portfolio</p>
+            <p class="loading-text">Initializing Katherine's portfolio</p>
         </div>
     </div>
 
     <!-- Main Desktop -->
     <div id="desktop" class="desktop hidden">
+
         <!-- Menu Bar -->
         <div class="menu-bar">
             <div class="menu-bar-left">
@@ -37,13 +38,11 @@
             </div>
         </div>
 
-        <!-- Desktop Background -->
-        <div class="desktop-background"></div>
-
         <!-- Windows Container -->
         <div class="windows-container">
+
             <!-- Terminal Window (About Me) -->
-            <div id="terminal-window" class="window terminal-window" style="display: block;">
+            <div id="terminal-window" class="window terminal-window">
                 <div class="window-header">
                     <div class="window-controls">
                         <span class="control close" onclick="closeWindow('terminal-window')"></span>
@@ -55,22 +54,33 @@
                 <div class="window-content terminal-content">
                     <div class="terminal-text">
                         <p class="terminal-prompt">Last login: <span id="login-time"></span> on ttys000</p>
-                        <p class="terminal-prompt">katherine@portfolio ~ %<span class="terminal-path"> whoami</span> </p>
+                        <p class="terminal-prompt">katherine@portfolio ~ % <span class="terminal-path">whoami</span></p>
                         <div class="terminal-output"><p>Katherine Deborah</p></div>
-                        <p class="terminal-prompt">katherine@portfolio ~ %<span class="terminal-path"> cat about_me.txt</span> </p>
+                        <p class="terminal-prompt">katherine@portfolio ~ % <span class="terminal-path">cat about_me.txt</span></p>
                         <div class="terminal-output">
-                            <p>Hi! I'm Katherine, a Computer Science Master's student at the University of Southern California.</p>
-<p>I focus on Artificial Intelligence and Software Development, with a knack for turning data into insights. I’ve interned as a Data Analyst, working with large databases, preprocessing pipelines, and visualizations.</p>
-<p>My current work involves building with LLMs, deep learning, and machine learning. On the development side, I mostly code in Python, Flask, and JavaScript—infusing a bit of creative flair into everything I do.</p>
-<p>Current Focus:</p>
-<ul>
-  <li>AI model integration in real-world applications</li>
-  <li>Full-stack development</li>
-  <li>Data analysis and visualization</li>
-</ul>
-<p>When I'm not exploring AI or coding something new, you'll likely find me sketching, experimenting with new tools, or adding original touches to my projects.</p>
-<p>Feel free to browse this site like your desktop—check the <strong>~folder</strong> for projects, the <strong>gallery</strong> for art, and yes, you can play games too 😉</p>
-
+                            <p>Hi! I'm Katherine, a Computer Science Master's student at USC.</p>
+                            <br>
+                            <p>My work sits at the intersection of ML, data science, and systems —</p>
+                            <p>from training RL agents for traffic optimization to building alternative</p>
+                            <p>data pipelines that score business health from 44 million reviews.</p>
+                            <p>I'm also dabbling in robotics and, when I'm not doing any of that,</p>
+                            <p>I build web pages for fun.</p>
+                            <br>
+                            <p>Professionally, I work as a Marketing Data Analyst at Keck Medicine</p>
+                            <p>of USC — designing SQL + Python pipelines, Tableau dashboards,</p>
+                            <p>and translating business questions into ML objectives.</p>
+                            <br>
+                            <p>Current focus:</p>
+                            <p>  → Reinforcement learning &amp; autonomous systems</p>
+                            <p>  → Large-scale data engineering &amp; ML pipelines</p>
+                            <p>  → Full-stack web development (yes, even as a hobby)</p>
+                            <p>  → Robotics (early days, but it's happening)</p>
+                            <br>
+                            <p>When I'm not deep in code, you'll find me sketching or adding</p>
+                            <p>creative touches to whatever I'm building.</p>
+                            <br>
+                            <p>Explore the desktop — projects in the folder, art in the gallery,</p>
+                            <p>and yes there are games 😄</p>
                         </div>
                         <p class="terminal-prompt">katherine@portfolio ~ % <span class="cursor">|</span></p>
                     </div>
@@ -91,38 +101,34 @@
                     <div class="contact-info">
                         <h3>Get in Touch</h3>
                         <div class="contact-item">
-                            <span class="contact-label">Email:</span>
+                            <span class="contact-label">Email</span>
                             <span class="contact-value">kath.deborah@gmail.com</span>
                         </div>
                         <div class="contact-item">
-    <span class="contact-label">LinkedIn:</span>
-    <span class="contact-value">
-        <a href="https://www.linkedin.com/in/Katherine-Deborah" target="_blank" rel="noopener noreferrer">
-            linkedin.com/in/katherine-deborah
-        </a>
-    </span>
-</div>
-<div class="contact-item">
-    <span class="contact-label">GitHub:</span>
-    <span class="contact-value">
-        <a href="https://github.com/Katherine-Deborah" target="_blank" rel="noopener noreferrer">
-            github.com/katherine-deborah
-        </a>
-    </span>
-</div>
-
+                            <span class="contact-label">LinkedIn</span>
+                            <span class="contact-value">
+                                <a href="https://www.linkedin.com/in/Katherine-Deborah" target="_blank" rel="noopener noreferrer">katherine-deborah</a>
+                            </span>
+                        </div>
                         <div class="contact-item">
-                            <span class="contact-label">Location:</span>
+                            <span class="contact-label">GitHub</span>
+                            <span class="contact-value">
+                                <a href="https://github.com/Katherine-Deborah" target="_blank" rel="noopener noreferrer">Katherine-Deborah</a>
+                            </span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">Location</span>
                             <span class="contact-value">Los Angeles, CA</span>
                         </div>
                         <form action="https://formsubmit.co/godwingn@usc.edu" method="POST" class="contact-form">
-    <h4>Send a Message</h4>
-    <input type="text" name="name" placeholder="Your Name" class="contact-input" required>
-    <input type="email" name="email" placeholder="Your Email" class="contact-input" required>
-    <textarea name="message" placeholder="Your Message" class="contact-textarea" required></textarea>
-    <input type="hidden" name="_captcha" value="false">
-    <button type="submit" class="contact-button">Send Message</button>
-</form>
+                            <h4>Send a Message</h4>
+                            <input type="text" name="name" placeholder="Your Name" class="contact-input" required>
+                            <input type="email" name="email" placeholder="Your Email" class="contact-input" required>
+                            <textarea name="message" placeholder="Your Message" class="contact-textarea" required></textarea>
+                            <input type="hidden" name="_captcha" value="false">
+                            <input type="hidden" name="_next" value="https://katherine-deborah.github.io">
+                            <button type="submit" class="contact-button">Send Message</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -137,341 +143,82 @@
                     </div>
                     <div class="window-title">System Preferences — Skills</div>
                 </div>
-                <div class="window-content settings-content">
-                    <div class="skills-container">
-                        <div class="skill-category">
-                            <h3>Programming Languages</h3>
-                            <div class="skill-grid">
-                                <div class="skill-item">
-                                    <span class="skill-name">Python</span>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress" style="width: 95%"></div>
-                                    </div>
-                                </div>
-                                <div class="skill-item">
-                                    <span class="skill-name">JavaScript</span>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress" style="width: 80%"></div>
-                                    </div>
-                                </div>
-                                <div class="skill-item">
-                                    <span class="skill-name">Java</span>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress" style="width: 50%"></div>
-                                    </div>
-                                </div>
-                                <div class="skill-item">
-                                    <span class="skill-name">C++</span>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress" style="width: 60%"></div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="window-content skills-content">
+                    <div class="skill-cat-section">
+                        <p class="skill-cat-label">Languages</p>
+                        <div class="skill-icon-row">
+                            <div class="skill-icon-item"><div class="skill-icon-box lang">Py</div><span>Python</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box lang">JS</div><span>JavaScript</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box lang">C++</div><span>C++</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box lang">SQL</div><span>SQL</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box lang">Jv</div><span>Java</span></div>
                         </div>
-                        <div class="skill-category">
-                            <h3>Machine Learning</h3>
-                            <div class="skill-grid">
-                                <div class="skill-item">
-                                    <span class="skill-name">TensorFlow</span>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress" style="width: 75%"></div>
-                                    </div>
-                                </div>
-                                <div class="skill-item">
-                                    <span class="skill-name">PyTorch</span>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress" style="width: 75%"></div>
-                                    </div>
-                                </div>
-                                <div class="skill-item">
-                                    <span class="skill-name">Scikit-learn</span>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress" style="width: 80%"></div>
-                                    </div>
-                                </div>
-                                <div class="skill-item">
-                                    <span class="skill-name">Pandas/NumPy</span>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress" style="width: 90%"></div>
-                                    </div>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="skill-cat-section">
+                        <p class="skill-cat-label">ML &amp; Data Science</p>
+                        <div class="skill-icon-row">
+                            <div class="skill-icon-item"><div class="skill-icon-box ml">PT</div><span>PyTorch</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box ml">TF</div><span>TensorFlow</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box ml">SK</div><span>scikit-learn</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box ml">XG</div><span>XGBoost</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box ml">Pd</div><span>Pandas</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box ml">Np</div><span>NumPy</span></div>
                         </div>
-                        <div class="skill-category">
-                            <h3>Web Technologies</h3>
-                            <div class="skill-grid">
-                                <div class="skill-item">
-                                    <span class="skill-name">React</span>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress" style="width: 80%"></div>
-                                    </div>
-                                </div>
-                                <div class="skill-item">
-                                    <span class="skill-name">Node.js</span>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress" style="width: 85%"></div>
-                                    </div>
-                                </div>
-                                <div class="skill-item">
-                                    <span class="skill-name">Flask</span>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress" style="width: 95%"></div>
-                                    </div>
-                                </div>
-                                <div class="skill-item">
-                                    <span class="skill-name">Postgres</span>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress" style="width: 85%"></div>
-                                    </div>
-                                </div>
+                    </div>
+                    <div class="skill-cat-section">
+                        <p class="skill-cat-label">Web Development</p>
+                        <div class="skill-icon-row">
+                            <div class="skill-icon-item"><div class="skill-icon-box web">Re</div><span>React</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box web">Fl</div><span>Flask</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box web">Vu</div><span>Vue.js</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box web">Nd</div><span>Node.js</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box web">Tw</div><span>Tailwind</span></div>
+                        </div>
+                    </div>
+                    <div class="skill-cat-section">
+                        <p class="skill-cat-label">Tools &amp; Platforms</p>
+                        <div class="skill-icon-row">
+                            <div class="skill-icon-item"><div class="skill-icon-box tools">🐳</div><span>Docker</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box tools">Git</div><span>Git</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box tools">Tb</div><span>Tableau</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box tools">ML</div><span>MLflow</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box tools">Pg</div><span>PostgreSQL</span></div>
+                            <div class="skill-icon-item"><div class="skill-icon-box tools">Sb</div><span>Supabase</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects Window -->
+            <div id="projects-window" class="window projects-window">
+                <div class="window-header">
+                    <div class="window-controls">
+                        <span class="control close" onclick="closeWindow('projects-window')"></span>
+                        <span class="control minimize"></span>
+                        <span class="control maximize"></span>
+                    </div>
+                    <div class="window-title">Projects</div>
+                </div>
+                <div class="window-content projects-window-content">
+                    <div class="filter-tabs">
+                        <button class="filter-btn active" onclick="filterProjects('all', this)">All</button>
+                        <button class="filter-btn" onclick="filterProjects('sde', this)">SDE</button>
+                        <button class="filter-btn" onclick="filterProjects('ml', this)">ML</button>
+                    </div>
+                    <div class="projects-viewport">
+                        <div class="projects-inner-wrapper" id="projects-inner-wrapper">
+                            <div class="project-cards-view" id="project-cards-view">
+                                <!-- populated by JS -->
                             </div>
-                            
+                            <div class="project-detail-view" id="project-detail-view">
+                                <!-- populated by JS on card click -->
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Finder Window -->
-             <!-- <div id="finder-window" class="window finder-window">
-             <div class="window-header">
-             <div class="window-controls">
-                <span class="control close" onclick="closeWindow('finder-window')"></span>
-                        <span class="control minimize"></span>
-                        <span class="control maximize"></span>
-             </div>
-             <div class="window-title">Finder</div>
-             </div>
-
-             <div class="finder-item" onclick="openWindow('settings-window')">
-                                <div class="finder-icon settings-icon"></div>
-                                <span>About Me</span>
-                            </div>
-             </div> -->
-
-             <div id="projects-window" class="window projects-window">
-    <div class="window-header">
-        <div class="window-controls">
-            <span class="control close" onclick="closeWindow('projects-window')"></span>
-            <span class="control minimize"></span>
-            <span class="control maximize"></span>
-        </div>
-        <div class="window-title">My Projects</div>
-    </div>
-    <div class="window-content">
-        <div class="filter-tabs">
-            <button class="filter-btn active" onclick="filterProjects('all')">All</button>
-            <button class="filter-btn" onclick="filterProjects('sde')">SDE</button>
-            <button class="filter-btn" onclick="filterProjects('ml')">ML</button>
-        </div>
-        <div class="project-list" id="projects-list">
-            <!-- Projects will be dynamically loaded here -->
-        </div>
-    </div>
-</div>
-<script>
-// Modified showProjects function to work with openWindow
-function showProjects() {
-    openWindow('projects-window');
-    // Load all projects when window opens
-    loadProjectsInWindow('all');
-}
-
-// New function to load projects directly into the projects window
-function loadProjectsInWindow(category = 'all') {
-    const projects = {
-        sde: [
-            {
-                name: 'Influencer Engagement & Sponsorship Coordination Platform',
-                url: 'https://github.com/Katherine-Deborah/iescp',
-                description: 'A full-stack platform enabling sponsors and influencers to collaborate seamlessly. Includes campaign management, ad request coordination, and performance tracking features.',
-                tech_stack: ['Flask', 'Vue.js', 'SQLite', 'Celery', 'Redis']
-            },
-            {
-                name: 'EduBridge',
-                url: 'https://github.com/Katherine-Deborah/edubridge/tree/master/student-dashboard',
-                description: 'A modern web app for teachers to track and manage student learning progress, featuring dashboards, reflection analysis, session timelines, and tools for data export and reminders.',
-                tech_stack: ['React', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'Docker']
-            },
-            {
-                name: 'Portfolio Website',
-                url: '#',
-                description: 'The interactive portfolio website you are currently viewing!',
-                tech_stack: ['HTML', 'CSS', 'JavaScript']
-            }
-        ],
-        ml: [
-            {
-                name: 'Video Analysis Q&A System',
-                url: 'https://github.com/Katherine-Deborah/Video-Analysis-Q-A-Sytem',
-                description: 'An AI-powered tool combining image captioning, audio transcription, and a chatbot to answer questions about an uploaded video.',
-                tech_stack: ['Python', 'Streamlit', 'PyTorch', 'OpenCV', 'Transformers', 'SQLite']
-            },
-            {
-                name: 'Diabetic Retinopathy Detection',
-                url: 'https://github.com/Katherine-Deborah/diabetic-retinopathy-detection',
-                description: 'A medical imaging pipeline that preprocesses retinal scans, extracts features using GoogLeNet and ResNet, and classifies using a Radial SVM.',
-                tech_stack: ['scikit-learn', 'PyTorch', 'OpenCV', 'NumPy']
-            },
-            {
-                name: '3D Traveling Salesman Problem',
-                url: '#',
-                description: 'An implementation of a Genetic Algorithm to solve the 3D Traveling Salesman Problem in Python.',
-                tech_stack: ['Python', 'SciPy']
-            }
-        ]
-    };
-
-    // Get all projects or filter by category
-    let displayProjects = [];
-    if (category === 'all') {
-        displayProjects = [...projects.sde, ...projects.ml].map(project => ({
-            ...project,
-            category: projects.sde.includes(project) ? 'SDE' : 'ML'
-        }));
-    } else {
-        displayProjects = projects[category].map(project => ({
-            ...project,
-            category: category.toUpperCase()
-        }));
-    }
-
-    // Update the projects list in the window
-    const projectsList = document.getElementById('projects-list');
-    if (projectsList) {
-        projectsList.innerHTML = displayProjects.map(project => `
-            <div class="project-item" onclick="openProject('${project.url}')">
-                <div class="project-info">
-                    <h4>${project.name}</h4>
-                    <p>${project.description}</p>
-                    <div class="tech-stack">
-                        ${project.tech_stack.map(tech => 
-                            `<span class="tech-tag">${tech}</span>`
-                        ).join('')}
-                    </div>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    // Update filter button states
-    updateFilterButtons(category);
-}
-
-// Function to update filter button states
-function updateFilterButtons(activeCategory) {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    filterButtons.forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.textContent.toLowerCase() === activeCategory || 
-            (btn.textContent === 'All' && activeCategory === 'all')) {
-            btn.classList.add('active');
-        }
-    });
-}
-
-// Modified filterProjects function
-function filterProjects(category) {
-    loadProjectsInWindow(category);
-}
-
-// Keep the openProject function as is
-function openProject(url) {
-    if (url === '#') {
-        alert('This project demo is coming soon!');
-        return;
-    }
-    window.open(url, '_blank');
-}
-</script>
-
-<style>
-/* Add these styles to your CSS file or in a <style> tag */
-.projects-window .window-content {
-    padding: 0;
-}
-
-.project-list {
-    max-height: 400px;
-    overflow-y: auto;
-    padding: 20px;
-}
-
-.project-item {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.project-item:hover {
-    background: #f8f9fa;
-    border-color: #007acc;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.project-info h4 {
-    margin: 0 0 10px 0;
-    color: #333;
-    font-size: 18px;
-}
-
-.project-info p {
-    margin: 0 0 15px 0;
-    color: #666;
-    line-height: 1.5;
-}
-
-.filter-tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    padding: 20px 20px 0 20px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 15px;
-}
-
-.filter-btn {
-    padding: 8px 16px;
-    border: 1px solid #ccc;
-    background: #f5f5f5;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s ease;
-}
-
-.filter-btn:hover {
-    background: #e0e0e0;
-}
-
-.filter-btn.active {
-    background: #007acc;
-    color: white;
-    border-color: #005999;
-}
-
-.tech-stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 10px;
-}
-
-.tech-tag {
-    background: #f0f8ff;
-    border: 1px solid #007acc;
-    color: #005999;
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-size: 11px;
-    font-weight: 500;
-}
-</style>
-
             <div id="finder-window" class="window finder-window">
                 <div class="window-header">
                     <div class="window-controls">
@@ -486,76 +233,48 @@ function openProject(url) {
                         <div class="sidebar-section">
                             <h4>Favorites</h4>
                             <div class="sidebar-item" onclick="showContent('about')">About Me</div>
-                            <div class="sidebar-item" onclick="openWindow('settings-window')">Skills</div>
+                            <div class="sidebar-item" onclick="showContent('skills')">Skills</div>
                             <div class="sidebar-item" onclick="showContent('projects')">Projects</div>
                             <div class="sidebar-item" onclick="showContent('contact')">Contact</div>
                             <div class="sidebar-item" onclick="showContent('resume')">Resume</div>
-                            <!-- <div class="sidebar-item" onclick="showContent('blog')">Blog</div>  -->
+                            <div class="sidebar-item" onclick="showContent('blog')">Blog</div>
                             <div class="sidebar-item" onclick="showContent('games')">Games</div>
                             <div class="sidebar-item" onclick="showContent('gallery')">Gallery</div>
-                            
                         </div>
                     </div>
                     <div class="finder-main">
-                        <div id="finder-content" class="finder-items">
-                            <div class="finder-item" onclick="openWindow('terminal-window')">
+                        <div class="finder-items">
+                            <div class="finder-item" onclick="showContent('about')">
                                 <div class="finder-icon terminal-icon"></div>
                                 <span>About Me</span>
                             </div>
-                            <div class="finder-item" onclick="openWindow('settings-window')">
+                            <div class="finder-item" onclick="showContent('skills')">
                                 <div class="finder-icon settings-icon"></div>
                                 <span>Skills</span>
                             </div>
-                            <div class="finder-item" onclick="showProjects()">
-                                <div class="finder-icon folder-icon"></div>
+                            <div class="finder-item" onclick="showContent('projects')">
+                                <div class="finder-icon projects-icon"></div>
                                 <span>Projects</span>
                             </div>
-                            <div class="finder-item" onclick="openWindow('resume-window')">
+                            <div class="finder-item" onclick="showContent('resume')">
                                 <div class="finder-icon resume-icon"></div>
                                 <span>Resume</span>
                             </div>
-                            <div class="finder-item" onclick="openWindow('messages-window')">
+                            <div class="finder-item" onclick="showContent('contact')">
                                 <div class="finder-icon messages-icon"></div>
                                 <span>Contact</span>
                             </div>
-                            <!-- <div class="finder-item" onclick="openWindow('blog-window')">
+                            <div class="finder-item" onclick="showContent('blog')">
                                 <div class="finder-icon blog-icon"></div>
                                 <span>Blog</span>
-                            </div>  -->
-                            <div class="finder-item" onclick="openWindow('games-window')">
+                            </div>
+                            <div class="finder-item" onclick="showContent('games')">
                                 <div class="finder-icon games-icon"></div>
                                 <span>Games</span>
                             </div>
-                            <div class="finder-item" onclick="openWindow('gallery-window')">
+                            <div class="finder-item" onclick="showContent('gallery')">
                                 <div class="finder-icon gallery-icon"></div>
                                 <span>Gallery</span>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Projects Folder View -->
-            <div id="projects-folder" class="window projects-folder-window">
-                <div class="window-header">
-                    <div class="window-controls">
-                        <span class="control close" onclick="closeWindow('projects-folder')"></span>
-                        <span class="control minimize"></span>
-                        <span class="control maximize"></span>
-                    </div>
-                    <div class="window-title">Projects</div>
-                </div>
-                <div class="window-content finder-content">
-                    <div class="finder-main">
-                        <div class="finder-items">
-                            <div class="finder-item" onclick="openProjectCategory('sde')">
-                                <div class="finder-icon folder-icon sde-folder"></div>
-                                <span>SDE Projects</span>
-                            </div>
-                            <div class="finder-item" onclick="openProjectCategory('ml')">
-                                <div class="finder-icon folder-icon ml-folder"></div>
-                                <span>ML Projects</span>
                             </div>
                         </div>
                     </div>
@@ -570,7 +289,7 @@ function openProject(url) {
                         <span class="control minimize"></span>
                         <span class="control maximize"></span>
                     </div>
-                    <div class="window-title">Resume — Katherine</div>
+                    <div class="window-title">Resume — Katherine Deborah</div>
                 </div>
                 <div class="window-content resume-content">
                     <div class="resume-toolbar">
@@ -581,12 +300,28 @@ function openProject(url) {
                             <h1>Katherine Deborah</h1>
                             <div class="contact-line">
                                 <span>Los Angeles, CA</span> |
-                                <span>(213) 843-0195</span> |
-                                <span>godwingn@usc.edu</span> 
+                                <span>kath.deborah@gmail.com</span> |
+                                <a href="https://www.linkedin.com/in/Katherine-Deborah" target="_blank">LinkedIn</a> |
+                                <a href="https://github.com/Katherine-Deborah" target="_blank">GitHub</a>
                             </div>
                         </div>
+
                         <div class="resume-section">
                             <h2>Experience</h2>
+                            <div class="job">
+                                <div class="job-header">
+                                    <h3>Marketing Data Analyst</h3>
+                                    <span class="date">Sept 2025 – Present</span>
+                                </div>
+                                <div class="company">Keck Medicine of USC · Los Angeles, CA</div>
+                                <ul>
+                                    <li>Designed SQL and Python-based analytical pipelines to extract and transform patient engagement data from Oracle (Populi) and Salesforce Data Cloud</li>
+                                    <li>Built predictive features from campaign, call volume, and patient interaction data to analyze drivers of engagement and conversion</li>
+                                    <li>Developed interactive Tableau dashboards to monitor representative performance and compare actual vs. target outcomes</li>
+                                    <li>Conducted statistical analysis to quantify relationships between outreach strategies and patient response, informing targeting optimization</li>
+                                    <li>Collaborated with cross-functional stakeholders to translate business questions into measurable analytics and ML objectives</li>
+                                </ul>
+                            </div>
                             <div class="job">
                                 <div class="job-header">
                                     <h3>Data Analyst</h3>
@@ -594,69 +329,74 @@ function openProject(url) {
                                 </div>
                                 <div class="company">Department of Telecommunication, Government of India</div>
                                 <ul>
-                                    <li>Developed a full-stack web application to streamline inquiry responses using React (frontend), Flask (backend), and SQLite, integrating key insights from SIM card data to enable real-time, accurate lookups</li>
+                                    <li>Developed a full-stack web application to streamline inquiry responses using React, Flask, and SQLite, integrating key insights from SIM card data for real-time lookups</li>
                                     <li>Automated the previously manual inquiry process, cutting response time by over 10 hours through dynamic routing and database integration</li>
-                                    <li>Engineered backend algorithms to auto-route electronic files and track case status, improving departmental efficiency and transparency</li>
-                                    <li>Cleaned and processed 60M+ rows of SIM card metadata (80 fields) using Python, Pandas, and Scikit-learn; conducted anomaly detection and contributed a time-saving solution to recurring data inconsistencies</li>
+                                    <li>Cleaned and processed 60M+ rows of SIM card metadata (80 fields) using Python, Pandas, and Scikit-learn</li>
                                 </ul>
                             </div>
                         </div>
+
                         <div class="resume-section">
-                            <h2>EDUCATION</h2>
+                            <h2>Education</h2>
                             <div class="job">
                                 <div class="job-header">
-                                    <h3>University of Southern California(USC)</h3>
-                                    <span class="date">2026</span>
+                                    <h3>University of Southern California (USC)</h3>
+                                    <span class="date">2024 – 2026</span>
                                 </div>
                                 <div class="company">Master of Science in Computer Science</div>
                             </div>
                             <div class="job">
                                 <div class="job-header">
-                                    <h3>Data Analyst</h3>
-                                    <span class="date">2024</span>
+                                    <h3>Government College of Technology</h3>
+                                    <span class="date">2020 – 2024</span>
                                 </div>
                                 <div class="company">Bachelor of Technology in Information Technology</div>
                             </div>
                         </div>
-                        <div class="resume-section">
-                            <h2>TECHNICAL SKILLS</h2>
-<div class="skills-list">
-    <span class="skill-tag">Python</span>
-    <span class="skill-tag">C++</span>
-    <span class="skill-tag">SQL</span>
-    <span class="skill-tag">JavaScript</span>
-    <span class="skill-tag">React</span>
-    <span class="skill-tag">Vue.js</span>
-    <span class="skill-tag">TensorFlow</span>
-    <span class="skill-tag">PyTorch</span>
-    <span class="skill-tag">Flask</span>
-    <span class="skill-tag">Docker</span>
-    <span class="skill-tag">Git</span>
-    <span class="skill-tag">Tableau</span>
-    <span class="skill-tag">MySQL</span>
-    <span class="skill-tag">MongoDB</span>
-</div>
 
-                        </div>
                         <div class="resume-section">
-                            <h2>PROJECTS</h2>
+                            <h2>Technical Skills</h2>
+                            <div class="skills-list">
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">SQL</span>
+                                <span class="skill-tag">JavaScript</span>
+                                <span class="skill-tag">C++</span>
+                                <span class="skill-tag">React</span>
+                                <span class="skill-tag">Vue.js</span>
+                                <span class="skill-tag">Flask</span>
+                                <span class="skill-tag">PyTorch</span>
+                                <span class="skill-tag">TensorFlow</span>
+                                <span class="skill-tag">XGBoost</span>
+                                <span class="skill-tag">SHAP</span>
+                                <span class="skill-tag">Pandas</span>
+                                <span class="skill-tag">Docker</span>
+                                <span class="skill-tag">Git</span>
+                                <span class="skill-tag">Tableau</span>
+                                <span class="skill-tag">MLflow</span>
+                                <span class="skill-tag">PostgreSQL</span>
+                                <span class="skill-tag">Supabase</span>
+                            </div>
+                        </div>
+
+                        <div class="resume-section">
+                            <h2>Projects</h2>
                             <div class="job">
                                 <div class="job-header">
-                                    <h3>Video Analysis Q&A System</h3>
+                                    <h3>peppercloud — Business Health &amp; Risk Engine</h3>
                                 </div>
                                 <ul>
-                                    <li>Built a Streamlit-based UI for video uploads, extracting frames at 0.2 FPS and generating scene captions using the BLIP model vision-language LLM; stored captions in SQLite for efficient retrieval</li>
-                                    <li>Integrated Whisper for speech-to-text transcription and Qwen LLM for natural language question answering, enabling users to query and receive context-aware responses about video content</li>
+                                    <li>End-to-end alternative data pipeline scoring 516K+ California businesses from 44M Google Maps reviews; streaming pipeline runs ~40 min without loading full dataset into RAM</li>
+                                    <li>Trained XGBoost classifier (ROC-AUC &gt; 0.80) to predict closure across 3/6/12-month horizons with SHAP per-prediction explainability</li>
+                                    <li>Delivered 4-tab interactive Plotly Dash dashboard with California scatter map, peer benchmarking, and risk signal views</li>
                                 </ul>
                             </div>
                             <div class="job">
                                 <div class="job-header">
-                                    <h3>Diabetic Retinopathy Detection</h3>
-                                    
+                                    <h3>Adaptive Traffic Signal Control (RL)</h3>
                                 </div>
                                 <ul>
-                                    <li>Developed a hybrid deep learning framework combining GoogLeNet and ResNet with Adaptive Particle Swarm Optimization for enhanced feature extraction from retinal fundus images</li>
-                                    <li>Classified DR severity levels using multiple ML models (Random Forest, SVM, Decision Tree, Linear Regression), achieving 94% accuracy and outperforming state-of-the-art benchmarks</li>   
+                                    <li>Implemented DQN and PPO agents from scratch in PyTorch to control traffic signals in a SUMO-simulated intersection</li>
+                                    <li>Designed configurable reward functions and ran ablation experiments tracked via MLflow and TensorBoard</li>
                                 </ul>
                             </div>
                             <div class="job">
@@ -664,18 +404,18 @@ function openProject(url) {
                                     <h3>Bidirectional Static Rectangle Expansion A*</h3>
                                 </div>
                                 <ul>
-                                    <li>Developed an optimized bidirectional SREA* pathfinding algorithm that expands search nodes from both source and destination, reducing iterations by 50% and significantly lowering computation time without increasing memory usage</li>
-                                    <li>Designed a modular architecture with map representation, search management, and real-time UI visualization, enabling lightweight deployment on mobile processors while maintaining optimal path accuracy in grid-based environments</li>
+                                    <li>Developed optimized bidirectional pathfinding algorithm reducing iterations by 50% without increasing memory usage</li>
                                 </ul>
                             </div>
                         </div>
+
                         <div class="resume-section">
-                            <h2>CERTIFICATIONS</h2>
+                            <h2>Certifications</h2>
                             <div class="certifications">
-    <h4>Diploma in Programming and Data Science - <i>IIT Madras</i></h4>
-    <h4>Mathematics for Machine Learning - <i>Coursera (Imperial College London)</i></h4>
-    <h4>Blockchain - <i>NPTEL IIT Kharagpur</i></h4>
-</div>
+                                <h4>Diploma in Programming and Data Science — <i>IIT Madras</i></h4>
+                                <h4>Mathematics for Machine Learning — <i>Coursera (Imperial College London)</i></h4>
+                                <h4>Blockchain — <i>NPTEL IIT Kharagpur</i></h4>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -689,37 +429,19 @@ function openProject(url) {
                         <span class="control minimize"></span>
                         <span class="control maximize"></span>
                     </div>
-                    <div class="window-title">Blog Posts</div>
+                    <div class="window-title">Blog</div>
                 </div>
                 <div class="window-content blog-content">
-                    <div class="blog-posts">
-                        <article class="blog-post" onclick="openBlogPost('ai-trends')">
-                            <div class="post-date">Dec 15, 2024</div>
-                            <h3>The Future of AI in Software Development</h3>
-                            <p>Exploring how artificial intelligence is reshaping the way we build software...</p>
-                            <div class="post-tags">
-                                <span class="tag">AI</span>
-                                <span class="tag">Development</span>
-                            </div>
-                        </article>
-                        <article class="blog-post" onclick="openBlogPost('ml-deployment')">
-                            <div class="post-date">Nov 28, 2024</div>
-                            <h3>ML Model Deployment Best Practices</h3>
-                            <p>A comprehensive guide to deploying machine learning models in production...</p>
-                            <div class="post-tags">
-                                <span class="tag">ML</span>
-                                <span class="tag">DevOps</span>
-                            </div>
-                        </article>
-                        <article class="blog-post" onclick="openBlogPost('react-performance')">
-                            <div class="post-date">Oct 12, 2024</div>
-                            <h3>React Performance Optimization</h3>
-                            <p>Tips and tricks for building lightning-fast React applications...</p>
-                            <div class="post-tags">
-                                <span class="tag">React</span>
-                                <span class="tag">Performance</span>
-                            </div>
-                        </article>
+                    <div class="blog-empty-state">
+                        <div class="blog-empty-icon">✍️</div>
+                        <h3>Writing in Progress</h3>
+                        <p>Putting together thoughts on ML, data engineering, and building things. Check back soon.</p>
+                        <div class="blog-topics">
+                            <span class="blog-topic-tag">Reinforcement Learning</span>
+                            <span class="blog-topic-tag">Alternative Data</span>
+                            <span class="blog-topic-tag">Data Engineering</span>
+                            <span class="blog-topic-tag">Building in Public</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -738,81 +460,49 @@ function openProject(url) {
                     <div class="games-grid">
                         <div class="game-item" onclick="playGame('space')">
                             <div class="game-preview">🚀</div>
-                            <h4>Space Defender Game</h4>
+                            <h4>Space Defender</h4>
                             <p>3D spaceship survival game built with Three.js</p>
-                            <button class="play-btn">Play Game</button>
+                            <button class="play-btn">Play</button>
                         </div>
                         <div class="game-item" onclick="playGame('jump')">
                             <div class="game-preview">📷</div>
-                            <h4>Pixel Gesture Jump Game</h4>
-                            <p>Jump game controlled by real-time hand tracking.</p>
-                            <button class="play-btn">Play Game</button>
+                            <h4>Pixel Gesture Jump</h4>
+                            <p>Jump game controlled by real-time hand tracking</p>
+                            <button class="play-btn">Play</button>
                         </div>
-                        <div class="game-item" onclick="playGame('cube')">
+                        <div class="game-item game-coming-soon">
                             <div class="game-preview">🧩</div>
-                            <h4>Personalized Rubiks Solver</h4>
-                            <p>Interactive Rubik’s Solver with 3D cube & step guide</p>
-                            <button class="play-btn">Play Game</button>
+                            <h4>Rubik's Solver</h4>
+                            <p>Interactive 3D Rubik's cube with step-by-step guide</p>
+                            <button class="play-btn coming">Coming Soon</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Gallery Window -->
-            <div id="gallery-window" class="window gallery-window">                 
-    <div class="window-header">                     
-        <div class="window-controls">                         
-            <span class="control close" onclick="closeWindow('gallery-window')"></span>                         
-            <span class="control minimize"></span>                         
-            <span class="control maximize"></span>                     
-        </div>                     
-        <div class="window-title">Art Gallery</div>                 
-    </div>                 
-    <div class="window-content gallery-content">                     
-        <div class="gallery-grid">                         
-            <div class="artwork" onclick="viewArtwork('image-1')">         
-                <div class="art-preview">             
-                    <img src="images/image-1.jpg" alt="Abstract Digital #1" style="width: 100%; height: 100%; object-fit: cover;">         
-                </div>     
-            </div>     
-            <div class="artwork" onclick="viewArtwork('image-2')">         
-                <div class="art-preview">             
-                    <img src="images/image-2.jpg" alt="Portrait Study" style="width: 100%; height: 100%; object-fit: cover;">         
-                </div>     
-            </div>     
-            <div class="artwork" onclick="viewArtwork('image-3')">         
-                <div class="art-preview">             
-                    <img src="images/image-3.jpg" alt="Digital Landscape" style="width: 100%; height: 100%; object-fit: cover;">         
-                </div>     
-            </div>     
-            <div class="artwork" onclick="viewArtwork('image-4')">         
-                <div class="art-preview">             
-                    <img src="images/image-4.jpg" alt="Geometric Forms" style="width: 100%; height: 100%; object-fit: cover;">         
-                </div>     
+            <div id="gallery-window" class="window gallery-window">
+                <div class="window-header">
+                    <div class="window-controls">
+                        <span class="control close" onclick="closeWindow('gallery-window')"></span>
+                        <span class="control minimize"></span>
+                        <span class="control maximize"></span>
+                    </div>
+                    <div class="window-title">Art Gallery</div>
+                </div>
+                <div class="window-content gallery-content">
+                    <div class="gallery-grid">
+                        <div class="artwork" onclick="viewArtwork('image-1')"><div class="art-preview"><img src="images/image-1.jpg" alt="Artwork 1"></div></div>
+                        <div class="artwork" onclick="viewArtwork('image-2')"><div class="art-preview"><img src="images/image-2.jpg" alt="Artwork 2"></div></div>
+                        <div class="artwork" onclick="viewArtwork('image-3')"><div class="art-preview"><img src="images/image-3.jpg" alt="Artwork 3"></div></div>
+                        <div class="artwork" onclick="viewArtwork('image-4')"><div class="art-preview"><img src="images/image-4.jpg" alt="Artwork 4"></div></div>
+                        <div class="artwork" onclick="viewArtwork('image-5')"><div class="art-preview"><img src="images/image-5.jpg" alt="Artwork 5"></div></div>
+                        <div class="artwork" onclick="viewArtwork('image-6')"><div class="art-preview"><img src="images/image-6.jpg" alt="Artwork 6"></div></div>
+                        <div class="artwork" onclick="viewArtwork('image-7')"><div class="art-preview"><img src="images/image-7.jpg" alt="Artwork 7"></div></div>
+                        <div class="artwork" onclick="viewArtwork('image-8')"><div class="art-preview"><img src="images/image-8.jpg" alt="Artwork 8"></div></div>
+                    </div>
+                </div>
             </div>
-            <div class="artwork" onclick="viewArtwork('image-5')">         
-                <div class="art-preview">             
-                    <img src="images/image-5.jpg" alt="Abstract Digital #1" style="width: 100%; height: 100%; object-fit: cover;">         
-                </div>     
-            </div>     
-            <div class="artwork" onclick="viewArtwork('image-6')">         
-                <div class="art-preview">             
-                    <img src="images/image-6.jpg" alt="Portrait Study" style="width: 100%; height: 100%; object-fit: cover;">         
-                </div>     
-            </div>     
-            <div class="artwork" onclick="viewArtwork('image-7')">         
-                <div class="art-preview">             
-                    <img src="images/image-7.jpg" alt="Digital Landscape" style="width: 100%; height: 100%; object-fit: cover;">         
-                </div>     
-            </div>     
-            <div class="artwork" onclick="viewArtwork('image-8')">         
-                <div class="art-preview">             
-                    <img src="images/image-8.jpg" alt="Geometric Forms" style="width: 100%; height: 100%; object-fit: cover;">         
-                </div>     
-            </div>  
-        </div>                                          
-    </div>             
-</div>
 
             <!-- Help Window -->
             <div id="help-window" class="window help-window">
@@ -829,21 +519,22 @@ function openProject(url) {
                         <div class="help-section">
                             <h3>🔍 Navigation</h3>
                             <ul>
-                                <li><strong>Finder:</strong> Click the folder icon in the dock to browse all portfolio sections</li>
-                                <li><strong>Projects:</strong> View my development projects organized by category</li>
-                                <li><strong>Drag & Drop:</strong> All windows can be dragged around the screen</li>
+                                <li><strong>Finder:</strong> Browse all sections from the folder icon in the dock</li>
+                                <li><strong>Dock:</strong> Click any icon for quick access</li>
+                                <li><strong>Drag:</strong> All windows can be dragged by their title bar</li>
                             </ul>
                         </div>
                         <div class="help-section">
                             <h3>📱 Applications</h3>
                             <ul>
-                                <li><strong>Terminal:</strong> Learn about me and my background</li>
-                                <li><strong>Messages:</strong> Contact information and message form</li>
-                                <li><strong>System Preferences:</strong> Technical skills and expertise</li>
-                                <li><strong>Resume:</strong> Professional experience and education</li>
-                                <!-- <li><strong>Blog:</strong> My latest articles and thoughts</li> -->
-                                <li><strong>Games:</strong> Interactive games I've developed</li>
-                                <li><strong>Gallery:</strong> Digital art and creative work</li>
+                                <li><strong>Terminal:</strong> About me and background</li>
+                                <li><strong>Messages:</strong> Contact form and links</li>
+                                <li><strong>System Preferences:</strong> Skills overview</li>
+                                <li><strong>Projects:</strong> Click any card for a full case study with thought process and results</li>
+                                <li><strong>Resume:</strong> Full professional experience</li>
+                                <li><strong>Blog:</strong> Writing — coming soon</li>
+                                <li><strong>Games:</strong> Games I've built</li>
+                                <li><strong>Gallery:</strong> Digital artwork</li>
                             </ul>
                         </div>
                         <div class="help-section">
@@ -851,13 +542,14 @@ function openProject(url) {
                             <ul>
                                 <li><strong>Cmd/Ctrl + W:</strong> Close active window</li>
                                 <li><strong>Cmd/Ctrl + T:</strong> Open terminal</li>
-                                <li><strong>🌓:</strong> Toggle dark/light mode</li>
+                                <li><strong>🌓:</strong> Toggle dark / light mode</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+        </div><!-- end windows-container -->
 
         <!-- Dock -->
         <div class="dock">
@@ -867,22 +559,22 @@ function openProject(url) {
             <div class="dock-item" onclick="openWindow('terminal-window')" title="Terminal">
                 <div class="dock-icon terminal-dock-icon"></div>
             </div>
-            <div class="dock-item" onclick="openWindow('messages-window')" title="Messages">
+            <div class="dock-item" onclick="openWindow('messages-window')" title="Contact">
                 <div class="dock-icon messages-dock-icon"></div>
             </div>
-            <div class="dock-item" onclick="showProjects()" title="Projects">
-                <div class="dock-icon finder-dock-icon"></div>
+            <div class="dock-item" onclick="openWindow('projects-window')" title="Projects">
+                <div class="dock-icon projects-dock-icon"></div>
             </div>
-            <div class="dock-item" onclick="openWindow('settings-window')" title="System Preferences">
+            <div class="dock-item" onclick="openWindow('settings-window')" title="Skills">
                 <div class="dock-icon settings-dock-icon"></div>
             </div>
             <div class="dock-separator"></div>
             <div class="dock-item" onclick="openWindow('resume-window')" title="Resume">
                 <div class="dock-icon resume-dock-icon"></div>
             </div>
-            <!-- <div class="dock-item" onclick="openWindow('blog-window')" title="Blog">
+            <div class="dock-item" onclick="openWindow('blog-window')" title="Blog">
                 <div class="dock-icon blog-dock-icon"></div>
-            </div> -->
+            </div>
             <div class="dock-item" onclick="openWindow('games-window')" title="Games">
                 <div class="dock-icon games-dock-icon"></div>
             </div>
@@ -890,10 +582,9 @@ function openProject(url) {
                 <div class="dock-icon gallery-dock-icon"></div>
             </div>
         </div>
-    </div>
+
+    </div><!-- end desktop -->
 
     <script src="script.js"></script>
 </body>
 </html>
-
-  

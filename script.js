@@ -1,710 +1,443 @@
-// Global variables
-let activeWindows = new Set();
-let windowZIndex = 100;
+// ── State ─────────────────────────────────────────────────
+let windowZIndex   = 100;
+let activeWindows  = new Set();
+let draggingWindow = null;
+let dragOffsetX    = 0;
+let dragOffsetY    = 0;
 
-// Initialize the application
-document.addEventListener('DOMContentLoaded', function() {
-    // Show loading screen for 3 seconds
+// ── Project Data ──────────────────────────────────────────
+const PROJECTS = {
+    sde: [
+        {
+            id: 'meal-prep',
+            emoji: '🍽️',
+            name: 'Meal Prep Maestro',
+            url: 'https://github.com/Katherine-Deborah/meal-prep',
+            liveUrl: 'https://meal-prep-steel.vercel.app',
+            description: 'Full-stack meal planning app with recipe management, auto-generated grocery lists, and a weekly meal calendar.',
+            tech_stack: ['React', 'TypeScript', 'Supabase', 'Tailwind CSS', 'shadcn/ui', 'Vite'],
+            detail: {
+                overview: 'Meal Prep Maestro is a full-stack web app that helps you plan your week\'s meals, manage a recipe library, and auto-generate a grocery list from whatever\'s on the calendar. Real-time sync via Supabase means changes show up instantly across devices.',
+                thought_process: 'I wanted something I\'d actually use. Meal planning was chaotic — tabs open everywhere, notes scattered, ingredients forgotten. I decided to build a clean tool that connects the three parts that always need to talk to each other: recipes, a weekly planner, and a shopping list. Supabase gave me real-time sync without writing a backend from scratch, and shadcn/ui gave me polished, unstyled components I could actually customize.',
+                tech_decisions: 'React + TypeScript for type safety throughout. Supabase for real-time data and auth without backend overhead. shadcn/ui + Tailwind for a design system that\'s fast to build with but not opinionated. Vite for near-instant dev reloads.',
+                results: [
+                    'Deployed and live at meal-prep-steel.vercel.app',
+                    'Recipe library with tagging, search, and detail sheets',
+                    'Weekly calendar planner with recipe assignment',
+                    'Auto-generated grocery list from planned meals',
+                    'Supabase real-time sync across sessions'
+                ]
+            }
+        },
+        {
+            id: 'iescp',
+            emoji: '📢',
+            name: 'Influencer Engagement & Sponsorship Platform',
+            url: 'https://github.com/Katherine-Deborah/iescp',
+            liveUrl: null,
+            description: 'Multi-role platform connecting sponsors and influencers. Campaign management, ad request workflows, and performance dashboards.',
+            tech_stack: ['Flask', 'Vue.js', 'SQLite', 'Celery', 'Redis'],
+            detail: {
+                overview: 'IESCP is a multi-role web platform with three distinct user types: admin, sponsor, and influencer. Sponsors create campaigns and send ad requests; influencers browse opportunities and manage their earnings. Background tasks (notifications, reminders, payment triggers) run asynchronously via Celery + Redis.',
+                thought_process: 'The brief was a real-world influencer marketplace. The hardest part was designing clean role-based access — each user type sees a completely different interface and has different permissions. I chose Flask for its routing flexibility and Vue.js for reactive UI without a heavy SPA build step.',
+                tech_decisions: 'Flask + Vue.js keeps backend and frontend loosely coupled. SQLite for simplicity in a single-server deployment. Celery + Redis handles async background jobs so the main request thread stays responsive. Role-based access enforced at both route and template level.',
+                results: [
+                    'Three-role authentication: admin, sponsor, influencer',
+                    'Campaign creation and ad request negotiation workflow',
+                    'Async background jobs with Celery + Redis',
+                    'Performance dashboards per user role',
+                    'Flagging and admin moderation system'
+                ]
+            }
+        },
+        {
+            id: 'portfolio',
+            emoji: '🖥️',
+            name: 'Portfolio Website',
+            url: 'https://github.com/Katherine-Deborah/katherine-deborah.github.io',
+            liveUrl: 'https://katherine-deborah.github.io',
+            description: 'The macOS-inspired interactive portfolio you\'re currently exploring — draggable windows, a dock, dark/light mode, and slide-in project case studies.',
+            tech_stack: ['HTML', 'CSS', 'JavaScript'],
+            detail: {
+                overview: 'This portfolio is itself the project. Instead of a traditional page, it simulates a macOS desktop environment with draggable, stackable windows, a functional dock, dark/light mode, keyboard shortcuts, and a project detail panel that slides in on click.',
+                thought_process: 'I wanted a portfolio that demonstrated frontend skills through the interface itself rather than just listing them. The macOS metaphor is immediately recognizable and gives a shared vocabulary for interactions — users already know what a window, a dock, and a close button do. The fun is making it feel real.',
+                tech_decisions: 'No frameworks — vanilla HTML, CSS, and JS. CSS custom properties power the full theme system. A single global drag handler (not per-window) prevents the listener-accumulation bug that plagues most drag implementations. Z-index stacking mirrors real window management.',
+                results: [
+                    'Fully interactive macOS desktop simulation',
+                    'Draggable windows with proper viewport clamping',
+                    'Dark/light mode with localStorage persistence',
+                    'Slide-in project detail panel with case study layout',
+                    'Blog, Gallery, Games, and Finder all functional'
+                ]
+            }
+        }
+    ],
+    ml: [
+        {
+            id: 'peppercloud',
+            emoji: '🌶️',
+            name: 'Business Health & Risk Engine (peppercloud)',
+            url: null,
+            liveUrl: null,
+            description: 'End-to-end alternative data pipeline scoring 516K+ California businesses and predicting closure risk from 44 million Google Maps reviews.',
+            tech_stack: ['Python', 'XGBoost', 'SHAP', 'VADER', 'Plotly Dash', 'Pandas', 'PyArrow'],
+            detail: {
+                overview: 'peppercloud is an alternative data risk engine built around a fintech use case: predicting business closure from public review signals. It processes 44 million Google Maps reviews for 516,000+ California businesses to assign a Health Score (0–100) and predict closure probability at three horizons — 3, 6, and 12 months. Everything surfaces in an interactive Dash dashboard with a California scatter map.',
+                thought_process: 'Most businesses fail silently — the signals are buried in public review data, just unstructured. I wanted to know if declining sentiment, falling engagement, and rating instability could predict closure the way credit signals predict default. The fintech framing (one binary label mapped to multiple risk horizons via calibrated thresholds) came from reading how real credit risk models work. SHAP on every prediction was a design requirement from day one — no black boxes.',
+                tech_decisions: 'Streamed 44M reviews line-by-line to avoid loading into RAM (~40 min, single pass). XGBoost histogram method for training speed at scale. VADER for sentiment — runs on CPU, no GPU needed, handles 44M reviews fine. PyArrow Parquet caching takes dashboard startup from minutes to seconds. SHAP TreeExplainer for fast, exact explanations on gradient boosted trees.',
+                results: [
+                    'ROC-AUC > 0.80 on held-out test set (XGBoost, 15:1 class imbalance)',
+                    '307,000+ businesses scored (minimum 5 reviews threshold)',
+                    '44.4 million reviews processed in ~40 min streaming pipeline',
+                    '4-tab interactive dashboard: Map, Overview, Peer Benchmark, Risk Signals',
+                    'Closure base rate: 6.22% (32,500 permanently closed businesses identified)',
+                    'SHAP waterfall + beeswarm + dependence plots for explainability'
+                ]
+            }
+        },
+        {
+            id: 'traffic-rl',
+            emoji: '🚦',
+            name: 'Adaptive Traffic Signal Control (RL)',
+            url: null,
+            liveUrl: null,
+            description: 'Multi-agent reinforcement learning system for adaptive traffic signal optimization. DQN and PPO agents trained from scratch using SUMO simulator.',
+            tech_stack: ['Python', 'PyTorch', 'SUMO', 'MLflow', 'TensorBoard', 'Gymnasium'],
+            detail: {
+                overview: 'A research-grade RL system that trains autonomous agents to control traffic signals in a SUMO-simulated urban intersection. Two algorithms — DQN and PPO — are implemented from scratch (no stable-baselines) and compared against a fixed-time baseline across four traffic scenarios: normal, NS-peak, EW-peak, and high-volume.',
+                thought_process: 'Fixed traffic signals are fundamentally dumb — they cycle on a timer regardless of actual queue state. RL lets an agent observe real queue depths, waiting times, and signal phase, then decide when to switch. I wanted to implement both DQN and PPO from scratch to really understand the mechanics: the replay buffer and target network in DQN, the GAE and clipped surrogate in PPO. SUMO gives realistic traffic physics including vehicle acceleration, deceleration, and yellow-phase compliance.',
+                tech_decisions: 'DQN with experience replay (50K buffer) and hard target updates every 200 steps. PPO with GAE (λ=0.95), clipped surrogate (ε=0.2), and entropy bonus. Both built from scratch in PyTorch. SUMO + TraCI for real-time simulation control. MLflow for experiment tracking and artifact management. Configurable reward functions to run ablation studies.',
+                results: [
+                    'DQN and PPO agents implemented from scratch in PyTorch',
+                    '500 training episodes with checkpoints at ep100–ep500',
+                    'Four traffic scenarios: normal, NS-peak, EW-peak, high-volume',
+                    'Reward ablation: waiting time / queue length / combined / pressure',
+                    'State ablation: queue, density, waiting time, phase components',
+                    'MLflow experiment tracking + TensorBoard visualization',
+                    '⚠️ Full benchmark vs fixed-time baseline in progress'
+                ]
+            }
+        },
+        {
+            id: 'video-qa',
+            emoji: '🎬',
+            name: 'Video Analysis Q&A System',
+            url: 'https://github.com/Katherine-Deborah/Video-Analysis-Q-A-Sytem',
+            liveUrl: null,
+            description: 'AI tool combining image captioning, audio transcription, and an LLM chatbot to answer natural language questions about any uploaded video.',
+            tech_stack: ['Python', 'Streamlit', 'PyTorch', 'OpenCV', 'BLIP', 'Whisper', 'Qwen'],
+            detail: {
+                overview: 'Upload a video, ask questions about it in plain English. The system extracts frames at 0.2 FPS, captions each one using the BLIP vision-language model, transcribes the audio with Whisper, and routes your questions through a Qwen LLM loaded with all that context. SQLite caches captions so re-runs skip reprocessing.',
+                thought_process: 'Video content is almost entirely unsearchable — you have to watch it. The insight was to treat video as a sequence of captioned frames plus a transcript, then hand that to an LLM as context. BLIP gives visual grounding (what\'s on screen), Whisper gives the audio layer, and Qwen reasons over both. The SQLite cache makes iterative querying fast once a video is processed.',
+                tech_decisions: 'BLIP for vision-language — strong at dense scene captioning. Whisper for robust speech-to-text across accents and noise. Qwen for the QA reasoning layer. SQLite for lightweight storage and retrieval of captions. Streamlit for rapid UI deployment without frontend overhead.',
+                results: [
+                    'End-to-end pipeline: video upload → captions + transcript → natural language QA',
+                    'Frame extraction at 0.2 FPS with BLIP visual captioning',
+                    'Whisper speech-to-text transcription layer',
+                    'Context-aware answers via Qwen LLM',
+                    'SQLite caching for efficient re-queries on processed videos'
+                ]
+            }
+        },
+        {
+            id: 'diabetic-retinopathy',
+            emoji: '👁️',
+            name: 'Diabetic Retinopathy Detection',
+            url: 'https://github.com/Katherine-Deborah/diabetic-retinopathy-detection',
+            liveUrl: null,
+            description: 'Medical imaging pipeline using hybrid GoogLeNet + ResNet feature extraction with Adaptive PSO for retinal fundus classification — 94% accuracy.',
+            tech_stack: ['PyTorch', 'scikit-learn', 'OpenCV', 'NumPy'],
+            detail: {
+                overview: 'A medical imaging system classifying diabetic retinopathy severity from retinal fundus images. Combines GoogLeNet and ResNet feature extractors with Adaptive Particle Swarm Optimization (APSO) for feature selection, then classifies using multiple ML heads — Random Forest, SVM, Decision Tree, and Linear Regression — compared across DR severity grades.',
+                thought_process: 'DR is a leading cause of preventable blindness. Individual CNNs miss complementary features: GoogLeNet\'s Inception modules capture wide receptive fields while ResNet\'s residual connections allow deep feature learning. Combining them and then using APSO to select the most discriminative features — rather than using all of them — reduces dimensionality and actually improves accuracy.',
+                tech_decisions: 'Hybrid feature extraction to get multi-scale representations. APSO for automated feature selection — adapts particle velocities based on convergence, finds better optima than standard PSO on high-dimensional feature spaces. Multiple classifier heads tested to find best fit for the combined feature space.',
+                results: [
+                    '94% classification accuracy across 5 DR severity grades',
+                    'Outperformed single-model (GoogLeNet-only, ResNet-only) baselines',
+                    'APSO reduced feature dimensionality while improving accuracy',
+                    'Multiple ML classifiers evaluated: RF, SVM, DT, Linear Regression'
+                ]
+            }
+        }
+    ]
+};
+
+function findProject(id) {
+    return [...PROJECTS.sde, ...PROJECTS.ml].find(p => p.id === id);
+}
+
+// ── Init ──────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    // Apply saved theme immediately
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.body.setAttribute('data-theme', savedTheme);
+
     setTimeout(() => {
         document.getElementById('loading-screen').classList.add('hidden');
         document.getElementById('desktop').classList.remove('hidden');
-        
-        // Initialize time
         updateTime();
         setInterval(updateTime, 1000);
-        
-        // Set login time
-        const now = new Date();
-        document.getElementById('login-time').textContent = now.toLocaleString();
-        
-        // Open terminal by default
+        document.getElementById('login-time').textContent = new Date().toLocaleString();
         openWindow('terminal-window');
-    }, 3000);
+    }, 2200);
 });
 
-// Update menu bar time
+// ── Time ──────────────────────────────────────────────────
 function updateTime() {
-    const now = new Date();
-    const timeString = now.toLocaleTimeString('en-US', { 
-        weekday: 'short',
-        month: 'short', 
-        day: 'numeric',
-        hour: '2-digit', 
-        minute: '2-digit'
+    const t = new Date().toLocaleTimeString('en-US', {
+        weekday: 'short', month: 'short', day: 'numeric',
+        hour: '2-digit', minute: '2-digit'
     });
-    document.getElementById('current-time').textContent = timeString;
+    document.getElementById('current-time').textContent = t;
 }
 
-// Window management functions
-function openWindow(windowId, forceToTop = true) {
-    console.log('Opening window:', windowId);
-    const window = document.getElementById(windowId);
-    if (!window) return;
-    
-    window.style.display = 'block';
-    
-    const allWindows = document.querySelectorAll('.window[style*="display: block"]');
-    let maxZ = 100;
-    allWindows.forEach(w => {
-        const z = parseInt(w.style.zIndex) || 0;
-        maxZ = Math.max(maxZ, z);
-        console.log('Window:', w.id, 'Z-index:', z);
-    });
-    
-    windowZIndex = maxZ + 1;
-    window.style.zIndex = windowZIndex;
-    
-    // Force window to top after a brief delay
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            window.style.zIndex = windowZIndex + 1;
-        });
-    });
-    console.log('Set', windowId, 'z-index to:', windowZIndex);
-    
+// ── Window Management ─────────────────────────────────────
+function openWindow(windowId) {
+    const win = document.getElementById(windowId);
+    if (!win) return;
+    win.style.display = 'block';
+    win.style.zIndex  = ++windowZIndex;
     activeWindows.add(windowId);
-    makeWindowDraggable(window);
-    
-    if (windowId === 'terminal-window') {
-        startTerminalCursor();
-    }
+    makeWindowDraggable(win);
+
+    if (windowId === 'terminal-window') startTerminalCursor();
+    if (windowId === 'projects-window') renderProjectCards('all');
 }
+
 function closeWindow(windowId) {
-    const window = document.getElementById(windowId);
-    if (!window) return;
-    
-    window.style.display = 'none';
+    const win = document.getElementById(windowId);
+    if (!win) return;
+    win.style.display = 'none';
     activeWindows.delete(windowId);
 }
 
-function makeWindowDraggable(windowElement) {
-    const header = windowElement.querySelector('.window-header');
-    let isDragging = false;
-    let startX, startY, startLeft, startTop;
+// Bring clicked window to front
+document.addEventListener('click', e => {
+    const win = e.target.closest('.window');
+    if (win && win.style.display !== 'none') {
+        if ((parseInt(win.style.zIndex) || 0) < windowZIndex) {
+            win.style.zIndex = ++windowZIndex;
+        }
+    }
+});
 
-    header.addEventListener('mousedown', dragStart);
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('mouseup', dragEnd);
+// ── Dragging (single global handler, no listener buildup) ─
+document.addEventListener('mousemove', e => {
+    if (!draggingWindow) return;
+    const menuH = 24, dockH = 90;
+    const winW = draggingWindow.offsetWidth;
+    const winH = draggingWindow.offsetHeight;
+    let left = e.clientX - dragOffsetX;
+    let top  = e.clientY - dragOffsetY;
+    left = Math.max(0,    Math.min(left, window.innerWidth  - winW));
+    top  = Math.max(menuH, Math.min(top,  window.innerHeight - winH - dockH));
+    draggingWindow.style.left   = left + 'px';
+    draggingWindow.style.top    = top  + 'px';
+    draggingWindow.style.right  = 'auto';
+    draggingWindow.style.bottom = 'auto';
+});
 
-    function dragStart(e) {
+document.addEventListener('mouseup', () => { draggingWindow = null; });
+
+function makeWindowDraggable(win) {
+    if (win.dataset.draggable === 'true') return;
+    win.dataset.draggable = 'true';
+    win.querySelector('.window-header').addEventListener('mousedown', e => {
         if (e.target.classList.contains('control')) return;
-        
-        isDragging = true;
-        startX = e.clientX;
-        startY = e.clientY;
-        
-        // Get current position
-        const rect = windowElement.getBoundingClientRect();
-        startLeft = rect.left;
-        startTop = rect.top;
-        
-        windowElement.style.zIndex = ++windowZIndex;
+        // Snapshot position (clears any CSS transform / right / bottom)
+        const rect = win.getBoundingClientRect();
+        win.style.transform = 'none';
+        win.style.right     = 'auto';
+        win.style.bottom    = 'auto';
+        win.style.left      = rect.left + 'px';
+        win.style.top       = rect.top  + 'px';
+        dragOffsetX    = e.clientX - rect.left;
+        dragOffsetY    = e.clientY - rect.top;
+        draggingWindow = win;
+        win.style.zIndex = ++windowZIndex;
         e.preventDefault();
-    }
-
-    function drag(e) {
-        if (!isDragging) return;
-        
-        e.preventDefault();
-        
-        // Calculate new position
-        const deltaX = e.clientX - startX;
-        const deltaY = e.clientY - startY;
-        
-        let newLeft = startLeft + deltaX;
-        let newTop = startTop + deltaY;
-
-        // Ensure window stays within bounds
-        const menuBarHeight = 22;
-        const dockHeight = 80;
-        const windowWidth = windowElement.offsetWidth;
-        const windowHeight = windowElement.offsetHeight;
-        
-        const maxX = window.innerWidth - windowWidth;
-        const maxY = window.innerHeight - windowHeight - dockHeight;
-        const minY = menuBarHeight;
-        
-        newLeft = Math.max(0, Math.min(newLeft, maxX));
-        newTop = Math.max(minY, Math.min(newTop, maxY));
-
-        windowElement.style.left = newLeft + 'px';
-        windowElement.style.top = newTop + 'px';
-    }
-
-    function dragEnd() {
-        isDragging = false;
-    }
+    });
 }
 
-// Terminal cursor animation
+// ── Terminal ──────────────────────────────────────────────
 function startTerminalCursor() {
-    const cursor = document.querySelector('.cursor');
-    if (cursor) {
-        cursor.style.animation = 'blink 1s infinite';
-    }
+    const c = document.querySelector('.cursor');
+    if (c) c.style.animation = 'blink 1s infinite';
 }
 
-// Finder content management - COMPLETELY REWRITTEN
-function showContent(contentType) {
-    // Force all windows opened from finder to appear on top
-    switch(contentType) {
-        case 'about':
-            openWindow('terminal-window', true);
-            break;
-        case 'contact':
-            openWindow('messages-window', true);
-            break;
-        case 'skills':
-            openWindow('settings-window', true);
-            break;
-        case 'projects':
-            showProjects();
-            break;
-        case 'resume':
-            openWindow('resume-window', true);
-            break;
-        case 'blog':
-            openWindow('blog-window', true);
-            break;
-        case 'games':
-            openWindow('games-window', true);
-            break;
-        case 'gallery':
-            openWindow('gallery-window', true);
-            break;
-    }
-}
-
-function showProjects() {
-    openProjectCategory('all');
-}
-
-function openProjectCategory(category = 'all') {
-    const projects = {
-        sde: [
-            {
-                name: 'Influencer Engagement & Sponsorship Coordination Platform',
-                url: 'https://github.com/Katherine-Deborah/iescp',
-                description: 'A full-stack platform enabling sponsors and influencers to collaborate seamlessly. Includes campaign management, ad request coordination, and performance tracking features.',
-                tech_stack: ['Flask', 'Vue.js', 'SQLite', 'Celery', 'Redis']
-            },
-            {
-                name: 'EduBridge',
-                url: 'https://github.com/Katherine-Deborah/edubridge/tree/master/student-dashboard',
-                description: 'A modern web app for teachers to track and manage student learning progress, featuring dashboards, reflection analysis, session timelines, and tools for data export and reminders.',
-                tech_stack: ['React', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'Docker']
-            },
-            {
-                name: 'Portfolio Website',
-                url: null,
-                description: 'The interactive portfolio website you are currently viewing!',
-                tech_stack: ['HTML', 'CSS', 'JavaScript']
-            }
-        ],
-        ml: [
-            {
-                name: 'Video Analysis Q&A System',
-                url: 'https://github.com/Katherine-Deborah/Video-Analysis-Q-A-Sytem',
-                description: 'An AI-powered tool combining image captioning, audio transcription, and a chatbot to answer questions about an uploaded video.',
-                tech_stack: ['Python', 'Streamlit', 'PyTorch', 'OpenCV', 'Transformers', 'SQLite']
-            },
-            {
-                name: 'Diabetic Retinopathy Detection',
-                url: 'https://github.com/Katherine-Deborah/diabetic-retinopathy-detection',
-                description: 'A medical imaging pipeline that preprocesses retinal scans, extracts features using GoogLeNet and ResNet, and classifies using a Radial SVM.',
-                tech_stack: ['scikit-learn', 'PyTorch', 'OpenCV', 'NumPy']
-            },
-            {
-                name: '3D Traveling Salesman Problem',
-                url: null,
-                description: 'An implementation of a Genetic Algorithm to solve the 3D Traveling Salesman Problem in Python.',
-                tech_stack: ['Python', 'SciPy']
-            }
-        ]
+// ── Finder dispatcher ─────────────────────────────────────
+function showContent(type) {
+    const map = {
+        about:    'terminal-window',
+        contact:  'messages-window',
+        skills:   'settings-window',
+        projects: 'projects-window',
+        resume:   'resume-window',
+        blog:     'blog-window',
+        games:    'games-window',
+        gallery:  'gallery-window',
     };
-
-    // Close the projects folder window since we're opening the actual project list
-    closeWindow('projects-folder');
-
-
-
-    // Get all projects or filter by category
-    let displayProjects = [];
-    if (category === 'all') {
-        displayProjects = [...projects.sde, ...projects.ml].map(project => ({
-            ...project,
-            category: projects.sde.includes(project) ? 'SDE' : 'ML'
-        }));
-    } else {
-        displayProjects = projects[category].map(project => ({
-            ...project,
-            category: category.toUpperCase()
-        }));
-    }
-    
-    showProjectList('My Projects', displayProjects, category);
+    if (map[type]) openWindow(map[type]);
 }
 
-function showProjectList(title, projects, activeFilter = 'all') {
-    // Remove existing project window if it exists
-    const existingWindow = document.getElementById('project-list-window');
-    if (existingWindow) {
-        existingWindow.remove();
+// ── Projects ──────────────────────────────────────────────
+function renderProjectCards(filter = 'all') {
+    const container = document.getElementById('project-cards-view');
+    if (!container) return;
+
+    let list = [];
+    if (filter === 'all') {
+        list = [
+            ...PROJECTS.sde.map(p => ({ ...p, cat: 'sde' })),
+            ...PROJECTS.ml.map(p  => ({ ...p, cat: 'ml'  }))
+        ];
+    } else {
+        list = PROJECTS[filter].map(p => ({ ...p, cat: filter }));
     }
 
-    // Create a new window to show projects with guaranteed high z-index
-    const projectWindow = document.createElement('div');
-    projectWindow.className = 'window finder-window';
-    projectWindow.id = 'project-list-window';
-    projectWindow.style.width = '700px';
-    projectWindow.style.height = '600px';
-    projectWindow.style.top = '80px';
-    projectWindow.style.left = '50%';
-    projectWindow.style.transform = 'translateX(-50%)';
-    projectWindow.style.display = 'block';
-    
-    // Force this window to have the highest z-index
-    windowZIndex = windowZIndex + 10; // Add extra buffer
-    projectWindow.style.zIndex = windowZIndex;
-
-    projectWindow.innerHTML = `
-        <div class="window-header">
-            <div class="window-controls">
-                <span class="control close" onclick="closeProjectList()"></span>
-                <span class="control minimize"></span>
-                <span class="control maximize"></span>
-            </div>
-            <div class="window-title">${title}</div>
-        </div>
-        <div class="window-content">
-            <div class="filter-tabs">
-                <button class="filter-btn ${activeFilter === 'all' ? 'active' : ''}" 
-                        onclick="filterProjects('all')">All</button>
-                <button class="filter-btn ${activeFilter === 'sde' ? 'active' : ''}" 
-                        onclick="filterProjects('sde')">SDE</button>
-                <button class="filter-btn ${activeFilter === 'ml' ? 'active' : ''}" 
-                        onclick="filterProjects('ml')">ML</button>
-            </div>
-            <div class="project-list">
-                ${projects.map(project => `
-                    <div class="project-item" onclick="openProject('${project.url}')">
-                        <div class="project-info">
-                            <h4>${project.name}</h4>
-                            <p>${project.description}</p>
-                            <div class="tech-stack">
-                                ${project.tech_stack.map(tech => 
-                                    `<span class="tech-tag">${tech}</span>`
-                                ).join('')}
-                            </div>
-                        </div>
+    container.innerHTML = list.map(p => `
+        <div class="project-card" onclick="showProjectDetail('${p.id}')">
+            <div class="project-card-left">
+                <span class="project-emoji">${p.emoji}</span>
+                <div class="project-card-info">
+                    <h4>${p.name}</h4>
+                    <p>${p.description}</p>
+                    <div class="tech-tags">
+                        ${p.tech_stack.slice(0, 4).map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                        ${p.tech_stack.length > 4 ? `<span class="tech-tag">+${p.tech_stack.length - 4}</span>` : ''}
                     </div>
-                `).join('')}
+                </div>
             </div>
+            <div class="project-card-right">
+                <span class="project-cat-badge ${p.cat}">${p.cat.toUpperCase()}</span>
+                <span class="project-arrow">›</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+function showProjectDetail(projectId) {
+    const p = findProject(projectId);
+    if (!p) return;
+    const d = p.detail;
+
+    const githubLink = p.url
+        ? `<a href="${p.url}" target="_blank" class="detail-link github">GitHub ↗</a>`
+        : '';
+    const liveLink = p.liveUrl
+        ? `<a href="${p.liveUrl}" target="_blank" class="detail-link live">Live ↗</a>`
+        : '';
+
+    document.getElementById('project-detail-view').innerHTML = `
+        <div class="detail-back" onclick="hideProjectDetail()">‹ Back to Projects</div>
+        <div class="detail-header">
+            <span class="detail-emoji">${p.emoji}</span>
+            <div>
+                <h3>${p.name}</h3>
+                <div class="detail-links">${githubLink}${liveLink}</div>
+            </div>
+        </div>
+        <div class="detail-section">
+            <h4>Overview</h4>
+            <p>${d.overview}</p>
+        </div>
+        <div class="detail-section">
+            <h4>Thought Process</h4>
+            <p>${d.thought_process}</p>
+        </div>
+        <div class="detail-section">
+            <h4>Tech Decisions</h4>
+            <p>${d.tech_decisions}</p>
+        </div>
+        <div class="detail-section">
+            <h4>Results</h4>
+            <ul>${d.results.map(r => `<li>${r}</li>`).join('')}</ul>
+        </div>
+        <div class="detail-section">
+            <h4>Screenshots</h4>
+            <div class="screenshot-placeholder">
+                <span>📷</span>
+                <p>Screenshots coming soon</p>
+            </div>
+        </div>
+        <div class="detail-tech">
+            ${p.tech_stack.map(t => `<span class="tech-tag">${t}</span>`).join('')}
         </div>
     `;
 
-    document.querySelector('.windows-container').appendChild(projectWindow);
-    makeWindowDraggable(projectWindow);
+    document.getElementById('project-detail-view').scrollTop = 0;
+    document.getElementById('projects-inner-wrapper').classList.add('show-detail');
 }
 
-const minimalStyles = `
-.filter-tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    padding: 0 20px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 15px;
+function hideProjectDetail() {
+    document.getElementById('projects-inner-wrapper').classList.remove('show-detail');
 }
 
-.filter-btn {
-    padding: 8px 16px;
-    border: 1px solid #ccc;
-    background: #f5f5f5;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s ease;
+function filterProjects(filter, btnEl) {
+    document.querySelectorAll('#projects-window .filter-btn')
+        .forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+    hideProjectDetail();
+    renderProjectCards(filter);
 }
 
-.filter-btn:hover {
-    background: #e0e0e0;
+// ── Theme ─────────────────────────────────────────────────
+function toggleTheme() {
+    const cur = document.body.getAttribute('data-theme') || 'dark';
+    const next = cur === 'light' ? 'dark' : 'light';
+    document.body.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
 }
 
-.filter-btn.active {
-    background: #007acc;
-    color: white;
-    border-color: #005999;
+// ── Help ──────────────────────────────────────────────────
+function showHelp() { openWindow('help-window'); }
+
+// ── Resume ────────────────────────────────────────────────
+function downloadResume() {
+    const a = document.createElement('a');
+    a.href = 'Katherine_Deborah.pdf';
+    a.download = 'Katherine_Deborah.pdf';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
 }
 
-.tech-stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 10px;
+// ── Games ─────────────────────────────────────────────────
+function playGame(id) {
+    const links = {
+        space: 'https://space-defender-game.vercel.app/',
+        jump:  'https://gesture-jump-game.vercel.app/',
+        cube:  null
+    };
+    if (links[id]) window.open(links[id], '_blank');
 }
 
-.tech-tag {
-    background: #f0f8ff;
-    border: 1px solid #007acc;
-    color: #005999;
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-size: 11px;
-    font-weight: 500;
-}
-`;
-
-// Inject minimal styles
-if (!document.getElementById('minimal-project-styles')) {
-    const styleElement = document.createElement('style');
-    styleElement.id = 'minimal-project-styles';
-    styleElement.textContent = minimalStyles;
-    document.head.appendChild(styleElement);
+// ── Gallery ───────────────────────────────────────────────
+function viewArtwork(id) {
+    const modal = document.createElement('div');
+    modal.className = 'artwork-modal';
+    modal.innerHTML = `
+        <button class="artwork-modal-close" onclick="this.parentElement.remove()">✕</button>
+        <img src="images/${id}.jpg" alt="Artwork">
+    `;
+    modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+    document.body.appendChild(modal);
 }
 
-function filterProjects(category) {
-    openProjectCategory(category);
-}
-
-function closeProjectList() {
-    const projectWindow = document.getElementById('project-list-window');
-    if (projectWindow) {
-        projectWindow.remove();
-    }
-}
-
-function openProject(url) {
-    if (url && url !== '#') {
-        window.open(url, '_blank');
-    }
-}
-
-function closeProjectList() {
-    const projectWindow = document.getElementById('project-list-window');
-    if (projectWindow) {
-        projectWindow.remove();
-    }
-}
-
-function openProject(url) {
-    if (url === '#') {
-        alert('This project demo is coming soon!');
-        return;
-    }
-    window.open(url, '_blank');
-}
-
-// Contact form submission
-document.querySelector('.contact-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(this);
-    
-    try {
-        const response = await fetch(this.action, {
-            method: 'POST',
-            body: formData
-        });
-        
-        if (response.ok) {
-            alert('Thank you for your message! I\'ll get back to you soon.');
-            this.reset(); // Clear form
-        } else {
-            alert('Sorry, there was an error sending your message. Please try again.');
-        }
-    } catch (error) {
-        alert('Sorry, there was an error sending your message. Please try again.');
-    }
-});
-
-// Add click handler for contact form submit button
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(() => {
-        const contactButton = document.querySelector('.contact-button');
-        if (contactButton) {
-            contactButton.addEventListener('click', submitContactForm);
-        }
-    }, 3100);
-});
-
-// Dock hover effects
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(() => {
-        const dockItems = document.querySelectorAll('.dock-item');
-        dockItems.forEach(item => {
-            item.addEventListener('mouseenter', function() {
-                // Add tooltip functionality if needed
-                const title = this.getAttribute('title');
-                if (title) {
-                    // Could implement tooltip here
-                }
-            });
-        });
-    }, 3100);
-});
-
-// Keyboard shortcuts
-document.addEventListener('keydown', function(e) {
-    // Cmd/Ctrl + W to close active window
+// ── Keyboard shortcuts ────────────────────────────────────
+document.addEventListener('keydown', e => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'w') {
         e.preventDefault();
-        const activeWindow = Array.from(activeWindows).pop();
-        if (activeWindow) {
-            closeWindow(activeWindow);
-        }
+        const last = [...activeWindows].pop();
+        if (last) closeWindow(last);
     }
-    
-    // Cmd/Ctrl + T to open terminal
     if ((e.metaKey || e.ctrlKey) && e.key === 't') {
         e.preventDefault();
         openWindow('terminal-window');
     }
-    
-    // Cmd/Ctrl + Shift + F to open finder
     if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === 'F') {
         e.preventDefault();
         openWindow('finder-window');
     }
 });
-
-// Handle window focus - IMPROVED VERSION
-document.addEventListener('click', function(e) {
-    const window = e.target.closest('.window');
-    if (window && window.style.display !== 'none') {
-        // Only update z-index if this window is not already on top
-        const currentZ = parseInt(window.style.zIndex) || 0;
-        if (currentZ < windowZIndex) {
-            window.style.zIndex = ++windowZIndex;
-        }
-    }
-});
-
-// CSS for project list styling
-const projectListStyles = `
-    .project-list {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        max-height: 400px;
-        overflow-y: auto;
-    }
-    
-    .project-item {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        padding: 15px;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .project-item:hover {
-        background: rgba(255, 255, 255, 0.1);
-        transform: translateY(-2px);
-    }
-    
-    .project-icon {
-        font-size: 24px;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(74, 158, 255, 0.2);
-        border-radius: 8px;
-    }
-    
-    .project-info h4 {
-        color: #4a9eff;
-        margin-bottom: 5px;
-        font-size: 16px;
-    }
-    
-    .project-info p {
-        color: #ccc;
-        font-size: 13px;
-        line-height: 1.4;
-    }
-`;
-
-// Inject project list styles
-const styleSheet = document.createElement('style');
-styleSheet.textContent = projectListStyles;
-document.head.appendChild(styleSheet);
-
-// Theme toggle functionality
-function toggleTheme() {
-    const body = document.body;
-    const currentTheme = body.getAttribute('data-theme');
-    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-    
-    body.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-}
-
-// Load saved theme on startup
-document.addEventListener('DOMContentLoaded', function() {
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.body.setAttribute('data-theme', savedTheme);
-});
-
-// Help functionality
-function showHelp() {
-    openWindow('help-window');
-}
-
-// Resume functionality
-function downloadResume() {
-    // Create a fake PDF download
-    const link = document.createElement('a');
-    link.href = 'Katherine_Deborah.pdf'; // You would put actual PDF data here
-    link.download = 'Katherine_Deborah.pdf';
-    link.style.display = 'none';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    // Show notification
-    alert('Resume download started!');
-}
-
-function printResume() {
-    const resumeContent = document.querySelector('.resume-viewer').innerHTML;
-    const printWindow = window.open('', '_blank');
-    printWindow.document.write(`
-        <html>
-            <head>
-                <title>Katherine's Resume</title>
-                <style>
-                    body { font-family: Arial, sans-serif; padding: 20px; }
-                    h1 { color: #007aff; }
-                    h2 { color: #007aff; border-bottom: 1px solid #007aff; padding-bottom: 5px; }
-                    .contact-line { margin-bottom: 20px; }
-                    .job-header { display: flex; justify-content: space-between; }
-                    .skills-list { display: flex; flex-wrap: wrap; gap: 10px; }
-                    .skill-tag { background: #007aff; color: white; padding: 4px 12px; border-radius: 12px; }
-                </style>
-            </head>
-            <body>${resumeContent}</body>
-        </html>
-    `);
-    printWindow.document.close();
-    printWindow.print();
-}
-
-// Blog functionality
-function openBlogPost(postId) {
-    const posts = {
-        'ai-trends': {
-            title: 'The Future of AI in Software Development',
-            content: 'Artificial Intelligence is revolutionizing how we approach software development...',
-            url: '#'
-        },
-        'ml-deployment': {
-            title: 'ML Model Deployment Best Practices',
-            content: 'Deploying machine learning models to production requires careful consideration...',
-            url: '#'
-        },
-        'react-performance': {
-            title: 'React Performance Optimization',
-            content: 'Building fast, responsive React applications requires understanding...',
-            url: '#'
-        }
-    };
-    
-    const post = posts[postId];
-    if (post) {
-        if (post.url === '#') {
-            alert(`Blog post "${post.title}" coming soon! This would normally open the full article.`);
-        } else {
-            window.open(post.url, '_blank');
-        }
-    }
-}
-
-// Games functionality
-function playGame(gameId) {
-    const gameLinks = {
-        'space': 'https://space-defender-game.vercel.app/',
-        'jump': 'https://gesture-jump-game.vercel.app/',
-        'cube': null
-    };
-
-    const gameUrl = gameLinks[gameId];
-    if (gameUrl) {
-        window.open(gameUrl, '_blank'); // Opens the game in a new tab
-    } else {
-        alert("Game will be up soon!");
-    }
-}
-
-// Gallery functionality
-function viewArtwork(artworkId) {
-    const artworks = {
-        'image-1': {
-            image: 'images/image-1.jpg'
-        },
-        'image-2': {
-            image: 'images/image-2.jpg'
-        },
-        'image-3': {
-            image: 'images/image-3.jpg'
-        },
-        'image-4': {
-            image: 'images/image-4.jpg'
-        },
-        'image-5': {
-            image: 'images/image-5.jpg'
-        },
-        'image-6': {
-            image: 'images/image-6.jpg'
-        },
-        'image-7': {
-            image: 'images/image-7.jpg'
-        },
-        'image-8': {
-            image: 'images/image-8.jpg'
-        }
-    };
-
-    const artwork = artworks[artworkId];
-    if (artwork) {
-        // Create a modal-like view for the artwork
-        const modal = document.createElement('div');
-        modal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            backdrop-filter: blur(10px);
-        `;
-
-        modal.innerHTML = `
-            <div style="text-align: center; color: white; max-width: 600px; padding: 20px;">
-                <div style="width: 400px; height: 400px; background: #f0f0f0; border-radius: 8px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-                    <img src="${artwork.image}"  style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-                
-                <button onclick="this.parentElement.parentElement.remove()" style="background: #4a9eff; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">Close</button>
-            </div>
-        `;
-
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.remove();
-            }
-        });
-
-        document.body.appendChild(modal);
-    }
-}
